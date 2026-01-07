@@ -14,6 +14,9 @@ import (
 type VehicleRepository interface {
 	Ping(ctx context.Context) error
 	Create(ctx context.Context, v domain.Vehicle) (domain.Vehicle, error)
+	FindByID(ctx context.Context, id string) (domain.Vehicle, error)
+	List(ctx context.Context, limit int64) ([]domain.Vehicle, error)
+	DeleteByID(ctx context.Context, id string) error
 }
 
 type MongoVehicleRepository struct {
@@ -52,4 +55,45 @@ func (r *MongoVehicleRepository) Create(ctx context.Context, v domain.Vehicle) (
 // Optional: nur um zu zeigen, dass DB wirklich erreichbar ist
 func (r *MongoVehicleRepository) Count(ctx context.Context) (int64, error) {
 	return r.collection.CountDocuments(ctx, bson.M{})
+}
+
+func (r *MongoVehicleRepository) FindByID(ctx context.Context, id string) (domain.Vehicle, error) {
+	var v domain.Vehicle
+	err := r.collection.FindOne(ctx, bson.M{"_id": id}).Decode(&v)
+	if err != nil {
+		return domain.Vehicle{}, err
+	}
+	return v, nil
+}
+
+func (r *MongoVehicleRepository) List(ctx context.Context, limit int64) ([]domain.Vehicle, error) {
+	opts := options.Find()
+	if limit <= 0 || limit > 200 {
+		limit = 50
+	}
+	opts.SetLimit(limit)
+	opts.SetSort(bson.D{{Key: "createdAt", Value: -1}})
+
+	cur, err := r.collection.Find(ctx, bson.M{}, opts)
+	if err != nil {
+		return nil, err
+	}
+	defer cur.Close(ctx)
+
+	var out []domain.Vehicle
+	if err := cur.All(ctx, &out); err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (r *MongoVehicleRepository) DeleteByID(ctx context.Context, id string) error {
+	res, err := r.collection.DeleteOne(ctx, bson.M{"_id": id})
+	if err != nil {
+		return err
+	}
+	if res.DeletedCount == 0 {
+		return mongo.ErrNoDocuments
+	}
+	return nil
 }
