@@ -8,6 +8,6 @@ type Vehicle struct {
 	Make      string    `json:"make" bson:"make"`
 	Model     string    `json:"model" bson:"model"`
 	Year      int       `json:"year" bson:"year"`
-	Price     float64   `json:"price" bson:"price"`
+	Price     any       `json:"price" bson:"price"`
 	CreatedAt time.Time `json:"createdAt" bson:"createdAt"`
 }
