@@ -54,14 +54,61 @@ func (h *Handler) Readyz(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) CreateVehicle(w http.ResponseWriter, r *http.Request) {
-	var in domain.Vehicle
-	if err := json.NewDecoder(r.Body).Decode(&in); err != nil {
+	var req CreateVehicleRequest
+
+	dec := json.NewDecoder(r.Body)
+	dec.DisallowUnknownFields()
+
+	if err := dec.Decode(&req); err != nil {
 		writeJSON(w, http.StatusBadRequest, map[string]any{"error": "invalid json"})
 		return
 	}
 
+	// Optional, aber sauber: keine "zweiten JSON-Objekte" im Body erlauben
+	if dec.More() {
+		writeJSON(w, http.StatusBadRequest, map[string]any{"error": "invalid json"})
+		return
+	}
+
+	// Validation (Request-Level)
+	if req.Title == "" || req.Make == "" || req.Model == "" {
+		writeJSON(w, http.StatusBadRequest, map[string]any{"error": "title, make and model are required"})
+		return
+	}
+	if len(req.Description) > 1000 {
+		writeJSON(w, http.StatusBadRequest, map[string]any{"error": "description must be <= 1000 characters"})
+		return
+	}
+	if req.Mileage < 0 || req.Mileage > 2_000_000 {
+		writeJSON(w, http.StatusBadRequest, map[string]any{"error": "mileage out of range"})
+		return
+	}
+	if req.Year < 1950 || req.Year > time.Now().Year()+1 {
+		writeJSON(w, http.StatusBadRequest, map[string]any{"error": "year out of range"})
+		return
+	}
+	if req.Price != nil && *req.Price < 0 {
+		writeJSON(w, http.StatusBadRequest, map[string]any{"error": "price must be >= 0"})
+		return
+	}
+
+	in := domain.Vehicle{
+		Title:       req.Title,
+		Make:        req.Make,
+		Model:       req.Model,
+		Year:        req.Year,
+		Price:       req.Price,
+		Fuel:        req.Fuel,
+		Mileage:     req.Mileage,
+		Description: req.Description,
+	}
+
 	out, err := h.svc.Create(r.Context(), in)
 	if err != nil {
+		if errors.Is(err, domain.ErrValidation) {
+			writeJSON(w, http.StatusBadRequest, map[string]any{"error": err.Error()})
+			return
+		}
 		writeJSON(w, http.StatusInternalServerError, map[string]any{"error": err.Error()})
 		return
 	}
