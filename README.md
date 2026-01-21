@@ -40,6 +40,24 @@ go run ./cmd/http
 The service is exposed on port 8081 by default.
 Der Service ist standardmäßig unter Port 8081 erreichbar.
 
+### Frontend
+
+In addition to the backend service, a simple web-based frontend is provided. The web UI consumes the REST API and is
+intended for manual interaction and visual verification of API behavior. The frontend is not part of the serverless
+evaluation and is therefore optional.
+
+Zusätzlich zum Backend existiert ein einfaches Web-Frontend. Das Web-UI konsumiert die REST-API und dient der manuellen
+Interaktion sowie der visuellen Überprüfung des API-Verhaltens. Das Frontend ist nicht Bestandteil der Serverless-
+Evaluation und daher optional.
+
+```bash
+cd web-ui
+npm install
+npm run dev
+```
+The frontend is typically available at http://localhost:3000.
+Das Frontend ist typischerweise unter http://localhost:3000 erreichbar.
+
 ### API Overview / API-Übersicht
 
 The following endpoints constitute the benchmark workload of the application.
