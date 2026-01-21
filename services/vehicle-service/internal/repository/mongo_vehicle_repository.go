@@ -3,6 +3,7 @@ package repository
 import (
 	"context"
 	"fmt"
+	"sync"
 	"time"
 
 	"github.com/nazzzus/vlp/services/vehicle-service/internal/domain"
@@ -24,18 +25,39 @@ type MongoVehicleRepository struct {
 	collection *mongo.Collection
 }
 
+var (
+	mongoOnce   sync.Once
+	mongoClient *mongo.Client
+	mongoErr    error
+)
+
+// connectMongo ensures we only create one client per process/runtime.
+func connectMongo(ctx context.Context, uri string) (*mongo.Client, error) {
+	mongoOnce.Do(func() {
+		connectCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
+		defer cancel()
+
+		mongoClient, mongoErr = mongo.Connect(connectCtx, options.Client().ApplyURI(uri))
+		if mongoErr != nil {
+			mongoErr = fmt.Errorf("mongo connect: %w", mongoErr)
+			return
+		}
+
+		pingCtx, cancel := context.WithTimeout(ctx, 5*time.Second)
+		defer cancel()
+		if err := mongoClient.Ping(pingCtx, nil); err != nil {
+			mongoErr = fmt.Errorf("mongo ping: %w", err)
+			return
+		}
+	})
+	return mongoClient, mongoErr
+}
+
 func NewMongoVehicleRepository(ctx context.Context, uri, db, coll string) (*MongoVehicleRepository, error) {
-	client, err := mongo.Connect(ctx, options.Client().ApplyURI(uri))
+	client, err := connectMongo(ctx, uri)
 	if err != nil {
-		return nil, fmt.Errorf("mongo connect: %w", err)
+		return nil, err
 	}
-
-	pingCtx, cancel := context.WithTimeout(ctx, 5*time.Second)
-	defer cancel()
-	if err := client.Ping(pingCtx, nil); err != nil {
-		return nil, fmt.Errorf("mongo ping: %w", err)
-	}
-
 	c := client.Database(db).Collection(coll)
 	return &MongoVehicleRepository{client: client, collection: c}, nil
 }
@@ -52,7 +74,6 @@ func (r *MongoVehicleRepository) Create(ctx context.Context, v domain.Vehicle) (
 	return v, nil
 }
 
-// Optional: nur um zu zeigen, dass DB wirklich erreichbar ist
 func (r *MongoVehicleRepository) Count(ctx context.Context) (int64, error) {
 	return r.collection.CountDocuments(ctx, bson.M{})
 }
