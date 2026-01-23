@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/nazzzus/vlp/services/vehicle-service/internal/domain"
@@ -123,7 +124,33 @@ func writeJSON(w http.ResponseWriter, status int, v any) {
 }
 
 func (h *Handler) ListVehicles(w http.ResponseWriter, r *http.Request) {
-	items, err := h.svc.List(r.Context(), 50)
+	// Policy: reproduzierbar + sicher
+	const (
+		defaultLimit int64 = 50
+		maxLimit     int64 = 500
+	)
+
+	limit := defaultLimit
+
+	// Query: /vehicles?limit=50
+	if raw := r.URL.Query().Get("limit"); raw != "" {
+		v, err := strconv.ParseInt(raw, 10, 64)
+		if err != nil {
+			writeJSON(w, http.StatusBadRequest, map[string]any{"error": "invalid limit"})
+			return
+		}
+		if v < 1 {
+			writeJSON(w, http.StatusBadRequest, map[string]any{"error": "limit must be >= 1"})
+			return
+		}
+		if v > maxLimit {
+			limit = maxLimit
+		} else {
+			limit = v
+		}
+	}
+
+	items, err := h.svc.List(r.Context(), limit)
 	if err != nil {
 		writeJSON(w, http.StatusInternalServerError, map[string]any{"error": err.Error()})
 		return

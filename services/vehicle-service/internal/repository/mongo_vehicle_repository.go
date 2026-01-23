@@ -88,9 +88,14 @@ func (r *MongoVehicleRepository) FindByID(ctx context.Context, id string) (domai
 }
 
 func (r *MongoVehicleRepository) List(ctx context.Context, limit int64) ([]domain.Vehicle, error) {
+	const defaultLimit int64 = 50
+	const maxLimit int64 = 500
 	opts := options.Find()
-	if limit <= 0 || limit > 200 {
-		limit = 50
+	if limit <= 0 {
+		limit = defaultLimit
+	}
+	if limit > maxLimit {
+		limit = maxLimit
 	}
 	opts.SetLimit(limit)
 	opts.SetSort(bson.D{{Key: "createdAt", Value: -1}})

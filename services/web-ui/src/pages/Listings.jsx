@@ -47,7 +47,7 @@ export default function Listings() {
                 const base = import.meta.env.VITE_API_BASE_URL;
                 if (!base) throw new Error("VITE_API_BASE_URL is not set");
 
-                const res = await fetch(`${base}/vehicles`);
+                const res = await fetch(`${base}/vehicles?limit=500`);
                 if (!res.ok) throw new Error(`HTTP ${res.status}`);
                 const data = await res.json();
 
