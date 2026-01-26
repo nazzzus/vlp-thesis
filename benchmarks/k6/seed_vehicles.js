@@ -5,7 +5,7 @@ const BASE_URL = __ENV.BASE_URL || 'http://localhost:8081';
 
 export const options = {
   vus: 1,
-  iterations: 100, // Anzahl Datensätze
+  iterations: 500, // Anzahl Datensätze
 };
 
 function randInt(min, max) {
@@ -34,17 +34,17 @@ function makeDescription() {
 }
 
 export default function () {
-  const makes = ['Mercedes Benz', 'MAN', 'Setra', 'Volvo'];
-  const models = ['Tourismo', 'A78', 'S415 NF', '7700 Hybrid'];
+  const makes = ['Mercedes Benz', 'MAN', 'Setra', 'Volvo', 'VDL', 'Neoplan', 'Scania'];
+  const models = ['Reisebus', 'Überlandbus', 'Linienbus', 'Kleinbus'];
 
   const payload = JSON.stringify({
     title: `seed-${randomString(6)} ${pick(makes)} ${pick(models)}`,
     make: pick(makes),
     model: pick(models),
-    year: randInt(2008, 2024),
-    price: randInt(0, 80000),       // 0 erlaubt, falls "Preis auf Anfrage"
+    year: randInt(2000, 2024),
+    price: randInt(0, 200000),       // 0 erlaubt, falls "Preis auf Anfrage"
     fuel: 'Diesel',
-    mileage: randInt(50000, 950000),
+    mileage: randInt(10000, 1500000),
     description: makeDescription(),
   });
 
