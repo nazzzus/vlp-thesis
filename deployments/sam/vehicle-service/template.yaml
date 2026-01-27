@@ -1,0 +1,91 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: VLP Vehicle Service (Go) - SAM deployment
+Parameters:
+  MongoUri:
+    Type: String
+    NoEcho: true
+  MongoDatabase:
+    Type: String
+    Default: vlp
+  MongoCollection:
+    Type: String
+    Default: vehicles
+
+
+Globals:
+  Function:
+    Timeout: 15
+    MemorySize: 512
+    Tracing: Active
+    Environment:
+      Variables:
+        SERVICE_NAME: vehicle-service
+        # Diese Werte überschreiben wir beim Deploy (samconfig oder Parameter)
+        MONGO_URI: !Ref MongoUri
+        MONGO_DB: !Ref MongoDatabase
+        MONGO_COLLECTION: !Ref MongoCollection
+        HTTP_PORT: "8081"  # in Lambda irrelevant, aber falls config das erwartet
+
+Resources:
+  Api:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Prod
+      EndpointConfiguration: REGIONAL
+      Cors:
+        AllowMethods: "'GET,POST,DELETE,OPTIONS'"
+        AllowHeaders: "'Content-Type,Authorization'"
+        AllowOrigin: "'*'"
+
+  VehicleFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: vlp-vehicle-service
+      Runtime: provided.al2023
+      Architectures: [arm64]
+      Handler: bootstrap
+      CodeUri: ./build/
+      Events:
+        Health:
+          Type: Api
+          Properties:
+            RestApiId: !Ref Api
+            Path: /healthz
+            Method: GET
+        Ready:
+          Type: Api
+          Properties:
+            RestApiId: !Ref Api
+            Path: /readyz
+            Method: GET
+        CreateVehicle:
+          Type: Api
+          Properties:
+            RestApiId: !Ref Api
+            Path: /vehicles
+            Method: POST
+        ListVehicles:
+          Type: Api
+          Properties:
+            RestApiId: !Ref Api
+            Path: /vehicles
+            Method: GET
+        GetVehicle:
+          Type: Api
+          Properties:
+            RestApiId: !Ref Api
+            Path: /vehicles/{id}
+            Method: GET
+        DeleteVehicle:
+          Type: Api
+          Properties:
+            RestApiId: !Ref Api
+            Path: /vehicles/{id}
+            Method: DELETE
+
+Outputs:
+  ApiUrl:
+    Description: REST API endpoint
+    Value: !Sub "https://${Api}.execute-api.${AWS::Region}.amazonaws.com/Prod"
+

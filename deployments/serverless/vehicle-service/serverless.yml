@@ -1,0 +1,50 @@
+service: vlp-vehicle-service-sls
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  region: eu-central-1
+  runtime: provided.al2023
+  architecture: arm64
+  memorySize: 512
+  timeout: 15
+  environment:
+    SERVICE_NAME: vehicle-service
+    MONGO_URI: ${env:MONGO_URI}
+    MONGO_DB: ${env:MONGO_DB, "vlp"}
+    MONGO_COLLECTION: ${env:MONGO_COLLECTION, "vehicles"}
+    HTTP_PORT: "8081"
+
+functions:
+  api:
+    handler: bootstrap
+    events:
+      - http:
+          path: healthz
+          method: get
+          cors: true
+      - http:
+          path: readyz
+          method: get
+          cors: true
+      - http:
+          path: vehicles
+          method: get
+          cors: true
+      - http:
+          path: vehicles
+          method: post
+          cors: true
+      - http:
+          path: vehicles/{id}
+          method: get
+          cors: true
+      - http:
+          path: vehicles/{id}
+          method: delete
+          cors: true
+
+package:
+  patterns:
+    - '!./**'
+    - './bootstrap'
