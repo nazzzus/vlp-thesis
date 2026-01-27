@@ -55,7 +55,6 @@ jobs:
   web-ui-ci:
     name: Web UI - build
     runs-on: ubuntu-latest
-    # Wenn du (noch) kein Frontend im CI willst, kannst du diesen Job erstmal auskommentieren.
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -65,12 +64,12 @@ jobs:
         with:
           node-version: "20"
           cache: npm
-          cache-dependency-path: web-ui/package-lock.json
+          cache-dependency-path: services/web-ui/package-lock.json
 
       - name: Install
-        working-directory: web-ui
+        working-directory: services/web-ui
         run: npm ci
 
       - name: Build
-        working-directory: web-ui
+        working-directory: services/web-ui
         run: npm run build

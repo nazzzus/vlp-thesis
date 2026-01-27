@@ -55,8 +55,8 @@ cd web-ui
 npm install
 npm run dev
 ```
-The frontend is typically available at http://localhost:3000.
-Das Frontend ist typischerweise unter http://localhost:3000 erreichbar.
+The frontend is typically available at http://localhost:5173.
+Das Frontend ist typischerweise unter http://localhost:5173 erreichbar.
 
 ### API Overview / API-Übersicht
 
