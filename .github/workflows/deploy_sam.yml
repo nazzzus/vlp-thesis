@@ -1,0 +1,49 @@
+name: Deploy (AWS SAM) - vehicle-service
+
+on:
+  workflow_dispatch:
+    inputs:
+      stack_name:
+        description: "VLP Vehicle Service (Go) - SAM deployment"
+        required: true
+        default: "sam-app"
+      region:
+        description: "AWS region"
+        required: true
+        default: "eu-central-1"
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup AWS SAM
+        uses: aws-actions/setup-sam@v2
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ inputs.region }}
+
+      - name: SAM build
+        working-directory: deployments/sam/vehicle-service
+        run: sam build
+
+      - name: SAM deploy
+        working-directory: deployments/sam/vehicle-service
+        run: |
+          sam deploy \
+            --stack-name "${{ inputs.stack_name }}" \
+            --no-confirm-changeset \
+            --no-fail-on-empty-changeset \
+            --capabilities CAPABILITY_IAM \
+            --parameter-overrides \
+              MongoUri="${{ secrets.MONGO_URI }}"
