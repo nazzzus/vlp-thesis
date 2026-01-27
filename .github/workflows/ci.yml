@@ -54,25 +54,3 @@ jobs:
         run: |
           cd services/vehicle-service
           go build ./cmd/lambda
-
-  web-ui-ci:
-    name: Web UI - build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: npm
-          cache-dependency-path: services/web-ui/package-lock.json
-
-      - name: Install
-        working-directory: services/web-ui
-        run: npm ci
-
-      - name: Build
-        working-directory: services/web-ui
-        run: npm run build
