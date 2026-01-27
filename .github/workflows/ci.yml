@@ -1,0 +1,76 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main", "dev" ]
+  pull_request:
+    branches: [ "main", "dev" ]
+
+permissions:
+  contents: read
+
+jobs:
+  go-ci:
+    name: Go (workspace) - test & build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.25.5"
+          cache: true
+
+      - name: Go env
+        run: |
+          go version
+          go env
+
+      - name: Download deps
+        run: |
+          go work sync
+          go mod download
+
+      - name: Vet
+        run: |
+          go vet ./...
+
+      - name: Test
+        run: |
+          go test ./... -count=1
+
+      - name: Build (vehicle-service http)
+        run: |
+          cd services/vehicle-service
+          go build ./cmd/http
+
+      - name: Build (vehicle-service lambda)
+        run: |
+          cd services/vehicle-service
+          go build ./cmd/lambda
+
+  web-ui-ci:
+    name: Web UI - build
+    runs-on: ubuntu-latest
+    # Wenn du (noch) kein Frontend im CI willst, kannst du diesen Job erstmal auskommentieren.
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: web-ui/package-lock.json
+
+      - name: Install
+        working-directory: web-ui
+        run: npm ci
+
+      - name: Build
+        working-directory: web-ui
+        run: npm run build
