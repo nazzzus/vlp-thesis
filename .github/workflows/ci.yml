@@ -34,13 +34,16 @@ jobs:
           go work sync
           go mod download
 
-      - name: Vet
+      - name: Vet (vehicle-service)
         run: |
+          cd services/vehicle-service
           go vet ./...
 
-      - name: Test
+      - name: Test (vehicle-service)
         run: |
+          cd services/vehicle-service
           go test ./... -count=1
+
 
       - name: Build (vehicle-service http)
         run: |
