@@ -7,3 +7,11 @@
 # Env / Secrets
 .env
 .env.*
+
+
+# Deployments
+# Serverless build artifacts
+**/.serverless/
+
+# SAM build artifacts
+**/.aws-sam/

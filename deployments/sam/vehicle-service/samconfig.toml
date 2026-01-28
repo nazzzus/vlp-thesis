@@ -6,7 +6,7 @@ resolve_s3 = true
 s3_prefix = "sam-app"
 region = "eu-central-1"
 capabilities = "CAPABILITY_IAM"
-parameter_overrides = "MongoUri=\"mongodb+srv://nazir_db_user:Nasu2026@cluster0.cdvnklb.mongodb.net/vlp?retryWrites=true&w=majority&appName=Cluster0\" MongoDatabase=\"vlp\" MongoCollection=\"vehicles\""
+parameter_overrides = "MongoUri=\"${MONGO_URI}\" MongoDatabase=\"vlp\" MongoCollection=\"vehicles\""
 image_repositories = []
 
 [default.global.parameters]
