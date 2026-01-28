@@ -17,7 +17,7 @@ func Load() (Config, error) {
 	cfg := Config{
 		ServiceName:     getenv("SERVICE_NAME", "vehicle-service"),
 		HTTPPort:        getenv("HTTP_PORT", "8081"),
-		MongoURI:        getenv("MONGO_URI", "mongodb://localhost:27017"),
+		MongoURI:        getenv("MONGO_URI", ""),
 		MongoDatabase:   getenv("MONGO_DB", "vlp"),
 		MongoCollection: getenv("MONGO_COLLECTION", "vehicles"),
 	}
