@@ -1,0 +1,18 @@
+version: 1.0
+provider:
+  name: openfaas
+  gateway: http://127.0.0.1:8080
+
+functions:
+  vlp-vehicle-service:
+    image: ghcr.io/nazzzus/vlp-vehicle-service:openfaas
+    skip_build: true
+    skip_push: true
+    secrets:
+      - mongodb-uri
+    environment:
+      PORT: "8082"
+      upstream_url: "http://127.0.0.1:8082"
+      MONGO_URI: "mongodb+srv://nazir_db_user:Nasu2026@cluster0.cdvnklb.mongodb.net/vlp?retryWrites=true&w=majority&appName=Cluster0"
+      MONGO_DB: "vlp"
+      MONGO_COLLECTION: "vehicles"

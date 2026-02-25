@@ -74,7 +74,7 @@
     "ApiLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/vlp-vehicle-service-sls-dev-api"
+        "LogGroupName": "/aws/lambda/vlp-vehicle-service-sls-prod-api"
       }
     },
     "IamRoleLambdaExecution": {
@@ -103,7 +103,7 @@
                 "-",
                 [
                   "vlp-vehicle-service-sls",
-                  "dev",
+                  "prod",
                   "lambda"
                 ]
               ]
@@ -120,7 +120,7 @@
                   ],
                   "Resource": [
                     {
-                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/vlp-vehicle-service-sls-dev*:*"
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/vlp-vehicle-service-sls-prod*:*"
                     }
                   ]
                 },
@@ -131,7 +131,7 @@
                   ],
                   "Resource": [
                     {
-                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/vlp-vehicle-service-sls-dev*:*:*"
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/vlp-vehicle-service-sls-prod*:*:*"
                     }
                   ]
                 }
@@ -145,7 +145,7 @@
             "-",
             [
               "vlp-vehicle-service-sls",
-              "dev",
+              "prod",
               {
                 "Ref": "AWS::Region"
               },
@@ -162,13 +162,13 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/vlp-vehicle-service-sls/dev/1769450704884-2026-01-26T18:05:04.884Z/vlp-vehicle-service-sls.zip"
+          "S3Key": "serverless/vlp-vehicle-service-sls/prod/1772035595748-2026-02-25T16:06:35.748Z/vlp-vehicle-service-sls.zip"
         },
         "Handler": "bootstrap",
         "Runtime": "provided.al2023",
-        "FunctionName": "vlp-vehicle-service-sls-dev-api",
+        "FunctionName": "vlp-vehicle-service-sls-prod-api",
         "MemorySize": 512,
-        "Timeout": 15,
+        "Timeout": 30,
         "Architectures": [
           "arm64"
         ],
@@ -192,20 +192,20 @@
         "ApiLogGroup"
       ]
     },
-    "ApiLambdaVersionCdXkGhTGQyYtaEShEBaaCP0ddWfX921wMexptuxxt8": {
+    "ApiLambdaVersionW1TYzXNo7RA61R9GlDH3J16OSIEthi9KTIJCRIh4c": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "ApiLambdaFunction"
         },
-        "CodeSha256": "87rLh066chP5/vPAaGLQQwax8npC4d3rBMwcqGSmGnE="
+        "CodeSha256": "dCF2hGhi67rpTkqJIsTmQmrb3xThVYjNlStML/rcA9s="
       }
     },
     "ApiGatewayRestApi": {
       "Type": "AWS::ApiGateway::RestApi",
       "Properties": {
-        "Name": "dev-vlp-vehicle-service-sls",
+        "Name": "prod-vlp-vehicle-service-sls",
         "EndpointConfiguration": {
           "Types": [
             "EDGE"
@@ -727,13 +727,13 @@
         "ApiLambdaPermissionApiGateway"
       ]
     },
-    "ApiGatewayDeployment1769450704119": {
+    "ApiGatewayDeployment1772035595054": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         },
-        "StageName": "dev"
+        "StageName": "prod"
       },
       "DependsOn": [
         "ApiGatewayMethodHealthzOptions",
@@ -792,16 +792,16 @@
         "Ref": "ServerlessDeploymentBucket"
       },
       "Export": {
-        "Name": "sls-vlp-vehicle-service-sls-dev-ServerlessDeploymentBucketName"
+        "Name": "sls-vlp-vehicle-service-sls-prod-ServerlessDeploymentBucketName"
       }
     },
     "ApiLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "ApiLambdaVersionCdXkGhTGQyYtaEShEBaaCP0ddWfX921wMexptuxxt8"
+        "Ref": "ApiLambdaVersionW1TYzXNo7RA61R9GlDH3J16OSIEthi9KTIJCRIh4c"
       },
       "Export": {
-        "Name": "sls-vlp-vehicle-service-sls-dev-ApiLambdaFunctionQualifiedArn"
+        "Name": "sls-vlp-vehicle-service-sls-prod-ApiLambdaFunctionQualifiedArn"
       }
     },
     "ServiceEndpoint": {
@@ -822,12 +822,12 @@
             {
               "Ref": "AWS::URLSuffix"
             },
-            "/dev"
+            "/prod"
           ]
         ]
       },
       "Export": {
-        "Name": "sls-vlp-vehicle-service-sls-dev-ServiceEndpoint"
+        "Name": "sls-vlp-vehicle-service-sls-prod-ServiceEndpoint"
       }
     }
   }

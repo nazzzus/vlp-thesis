@@ -25,7 +25,9 @@ func withCORS(next http.Handler) http.Handler {
 
 func Routes(h *Handler) http.Handler {
 	mux := http.NewServeMux()
-
+	mux.HandleFunc("GET /", func(w http.ResponseWriter, r *http.Request) {
+		http.Redirect(w, r, "/healthz", http.StatusTemporaryRedirect)
+	})
 	mux.HandleFunc("GET /healthz", h.Healthz)
 	mux.HandleFunc("GET /readyz", h.Readyz)
 	mux.HandleFunc("POST /vehicles", h.CreateVehicle)

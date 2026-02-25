@@ -15,9 +15,9 @@ Parameters:
 
 Globals:
   Function:
-    Timeout: 15
+    Timeout: 30
     MemorySize: 512
-    Tracing: Active
+    Tracing: PassThrough
     Environment:
       Variables:
         SERVICE_NAME: vehicle-service

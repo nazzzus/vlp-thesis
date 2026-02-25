@@ -1,13 +1,15 @@
 service: vlp-vehicle-service-sls
 frameworkVersion: "3"
+useDotenv: true
 
 provider:
   name: aws
+  stage: ${opt:stage, 'prod'}
   region: eu-central-1
   runtime: provided.al2023
   architecture: arm64
   memorySize: 512
-  timeout: 15
+  timeout: 30
   environment:
     SERVICE_NAME: vehicle-service
     MONGO_URI: ${env:MONGO_URI}
