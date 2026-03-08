@@ -1,0 +1,16 @@
+% T3 Ramp-Test – Stabiler Bereich (automatisch generiert)
+
+\begin{table}[htbp]
+  \centering
+  \caption{T3 Ramp-Test: Latenz im stabilen Bereich ($\leq$10\,VUs, erste 6\,min)}
+  \label{tab:t3_stabil}
+  \begin{tabular}{lrrrr}
+    \toprule
+    Framework & $n$ & Avg (ms) & p95 (ms) & Fehlerrate (\%) \\
+    \midrule
+    SAM & 14,216 & 102.2 & 212.5 & 0.57 \\
+    SLS & 12,607 & 131.4 & 204.5 & 0.09 \\
+    OpenFaaS & 19,592 & 47.7 & 128.0 & 0.00 \\
+    \bottomrule
+  \end{tabular}
+\end{table}

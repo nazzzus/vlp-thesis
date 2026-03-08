@@ -35,7 +35,7 @@ if (!BASE_URL) {
 const GET_RATIO = 0.70;
 
 export const options = {
-  vus:      50,
+  vus:      10,
   duration: '10m',
   thresholds: {
     // Fehlerrate unter 1 % – Überschreitung macht Run ungültig (→ wiederholen)

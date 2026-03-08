@@ -1,0 +1,404 @@
+VLP T2/T3 Protokoll – Fr.  6 März 2026 02:17:29 CET
+SAM_URL:  https://q39f8p16va.execute-api.eu-central-1.amazonaws.com/Prod
+SLS_URL:  https://x9j41qq8u8.execute-api.eu-central-1.amazonaws.com/prod
+FAAS_URL: http://aeaf98ecd4b5b4f818de564cba531498-1255126595.eu-central-1.elb.amazonaws.com:8080/function/vlp-vehicle-service
+═══════════════════════════════════════════════════════
+  Voraussetzungen prüfen
+═══════════════════════════════════════════════════════
+[2026-03-06 02:17:29] Alle Voraussetzungen erfüllt.
+═══════════════════════════════════════════════════════
+  T2 Konstantlast – SAM (3× 10 min)
+═══════════════════════════════════════════════════════
+[2026-03-06 02:17:29] URL: https://q39f8p16va.execute-api.eu-central-1.amazonaws.com/Prod
+[2026-03-06 02:17:29]   T2 Run 1/3 gestartet
+
+
+  █ THRESHOLDS 
+
+    http_req_failed
+    ✓ 'rate<0.01' rate=0.00%
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 11173   62.026025/s
+    checks_succeeded...: 100.00% 11173 out of 11173
+    checks_failed......: 0.00%   0 out of 11173
+
+    ✓ Warm-up: status 200
+
+    HTTP
+    http_req_duration..............: avg=60.33ms  min=34.92ms  med=46.03ms  max=1.21s p(90)=64.04ms p(95)=121.52ms
+      { expected_response:true }...: avg=60.33ms  min=34.92ms  med=46.03ms  max=1.21s p(90)=64.04ms p(95)=121.52ms
+    http_req_failed................: 0.00%  0 out of 11173
+    http_reqs......................: 11173  62.026025/s
+
+    EXECUTION
+    iteration_duration.............: avg=161.13ms min=135.44ms med=146.75ms max=1.31s p(90)=164.9ms p(95)=222.46ms
+    iterations.....................: 11173  62.026025/s
+    vus............................: 10     min=10         max=10
+    vus_max........................: 10     min=10         max=10
+
+    NETWORK
+    data_received..................: 166 MB 923 kB/s
+    data_sent......................: 994 kB 5.5 kB/s
+
+
+
+[2026-03-06 02:20:29]   Warm-up abgeschlossen
+[2026-03-06 02:20:29]   T2 gestartet → results/t2_sam_run1.json
+[2026-03-06 02:30:30]   Run 1 gespeichert: results/t2_sam_run1.json
+[2026-03-06 02:40:30]   Wartezeit abgeschlossen: Pause vor Run 2
+[2026-03-06 02:40:30]   T2 Run 2/3 gestartet
+
+
+  █ THRESHOLDS 
+
+    http_req_failed
+    ✓ 'rate<0.01' rate=0.00%
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 9426    52.327917/s
+    checks_succeeded...: 100.00% 9426 out of 9426
+    checks_failed......: 0.00%   0 out of 9426
+
+    ✓ Warm-up: status 200
+
+    HTTP
+    http_req_duration..............: avg=89.9ms min=49.65ms  med=74.23ms  max=1.38s p(90)=115.74ms p(95)=176.87ms
+      { expected_response:true }...: avg=89.9ms min=49.65ms  med=74.23ms  max=1.38s p(90)=115.74ms p(95)=176.87ms
+    http_req_failed................: 0.00%  0 out of 9426
+    http_reqs......................: 9426   52.327917/s
+
+    EXECUTION
+    iteration_duration.............: avg=191ms  min=150.75ms med=174.99ms max=1.49s p(90)=216.93ms p(95)=279.19ms
+    iterations.....................: 9426   52.327917/s
+    vus............................: 10     min=10        max=10
+    vus_max........................: 10     min=10        max=10
+
+    NETWORK
+    data_received..................: 127 MB 705 kB/s
+    data_sent......................: 840 kB 4.7 kB/s
+
+
+
+[2026-03-06 02:43:30]   Warm-up abgeschlossen
+[2026-03-06 02:43:30]   T2 gestartet → results/t2_sam_run2.json
+[2026-03-06 02:53:31]   Run 2 gespeichert: results/t2_sam_run2.json
+[2026-03-06 03:03:31]   Wartezeit abgeschlossen: Pause vor Run 3
+[2026-03-06 03:03:31]   T2 Run 3/3 gestartet
+
+
+  █ THRESHOLDS 
+
+    http_req_failed
+    ✓ 'rate<0.01' rate=0.00%
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 9323    51.746968/s
+    checks_succeeded...: 100.00% 9323 out of 9323
+    checks_failed......: 0.00%   0 out of 9323
+
+    ✓ Warm-up: status 200
+
+    HTTP
+    http_req_duration..............: avg=91.92ms  min=63.45ms  med=74.49ms  max=832.44ms p(90)=111.85ms p(95)=178.78ms
+      { expected_response:true }...: avg=91.92ms  min=63.45ms  med=74.49ms  max=832.44ms p(90)=111.85ms p(95)=178.78ms
+    http_req_failed................: 0.00%  0 out of 9323
+    http_reqs......................: 9323   51.746968/s
+
+    EXECUTION
+    iteration_duration.............: avg=193.12ms min=164.19ms med=175.53ms max=932.78ms p(90)=213.38ms p(95)=282.79ms
+    iterations.....................: 9323   51.746968/s
+    vus............................: 10     min=10        max=10
+    vus_max........................: 10     min=10        max=10
+
+    NETWORK
+    data_received..................: 125 MB 695 kB/s
+    data_sent......................: 839 kB 4.7 kB/s
+
+
+
+[2026-03-06 03:06:31]   Warm-up abgeschlossen
+[2026-03-06 03:06:31]   T2 gestartet → results/t2_sam_run3.json
+[2026-03-06 03:16:32]   Run 3 gespeichert: results/t2_sam_run3.json
+[2026-03-06 03:16:32] T2 SAM abgeschlossen.
+═══════════════════════════════════════════════════════
+  T3 Ramp – SAM (1× ~12 min)
+═══════════════════════════════════════════════════════
+[2026-03-06 03:16:32] URL: https://q39f8p16va.execute-api.eu-central-1.amazonaws.com/Prod
+[2026-03-06 03:16:32]   T3 gestartet → results/t3_sam.json
+[2026-03-06 03:28:32]   T3 SAM gespeichert: results/t3_sam.json
+═══════════════════════════════════════════════════════
+  Pause: SAM → Serverless Framework (10 min)
+═══════════════════════════════════════════════════════
+[2026-03-06 03:38:32]   Wartezeit abgeschlossen: Framework-Pause
+═══════════════════════════════════════════════════════
+  T2 Konstantlast – SLS (3× 10 min)
+═══════════════════════════════════════════════════════
+[2026-03-06 03:38:32] URL: https://x9j41qq8u8.execute-api.eu-central-1.amazonaws.com/prod
+[2026-03-06 03:38:32]   T2 Run 1/3 gestartet
+
+
+  █ THRESHOLDS 
+
+    http_req_failed
+    ✓ 'rate<0.01' rate=0.00%
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 7981    44.288188/s
+    checks_succeeded...: 100.00% 7981 out of 7981
+    checks_failed......: 0.00%   0 out of 7981
+
+    ✓ Warm-up: status 200
+
+    HTTP
+    http_req_duration..............: avg=124.46ms min=95.99ms  med=107.92ms max=1.11s p(90)=133.9ms  p(95)=189.33ms
+      { expected_response:true }...: avg=124.46ms min=95.99ms  med=107.92ms max=1.11s p(90)=133.9ms  p(95)=189.33ms
+    http_req_failed................: 0.00%  0 out of 7981
+    http_reqs......................: 7981   44.288188/s
+
+    EXECUTION
+    iteration_duration.............: avg=225.6ms  min=196.55ms med=208.92ms max=1.21s p(90)=235.12ms p(95)=290.16ms
+    iterations.....................: 7981   44.288188/s
+    vus............................: 10     min=10        max=10
+    vus_max........................: 10     min=10        max=10
+
+    NETWORK
+    data_received..................: 106 MB 587 kB/s
+    data_sent......................: 727 kB 4.0 kB/s
+
+
+
+[2026-03-06 03:41:33]   Warm-up abgeschlossen
+[2026-03-06 03:41:33]   T2 gestartet → results/t2_sls_run1.json
+[2026-03-06 03:51:34]   Run 1 gespeichert: results/t2_sls_run1.json
+[2026-03-06 04:01:34]   Wartezeit abgeschlossen: Pause vor Run 2
+[2026-03-06 04:01:34]   T2 Run 2/3 gestartet
+
+
+  █ THRESHOLDS 
+
+    http_req_failed
+    ✓ 'rate<0.01' rate=0.00%
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 7572    42.022112/s
+    checks_succeeded...: 100.00% 7572 out of 7572
+    checks_failed......: 0.00%   0 out of 7572
+
+    ✓ Warm-up: status 200
+
+    HTTP
+    http_req_duration..............: avg=136.52ms min=107.92ms med=121.98ms max=1.05s p(90)=149.35ms p(95)=204.03ms
+      { expected_response:true }...: avg=136.52ms min=107.92ms med=121.98ms max=1.05s p(90)=149.35ms p(95)=204.03ms
+    http_req_failed................: 0.00%  0 out of 7572
+    http_reqs......................: 7572   42.022112/s
+
+    EXECUTION
+    iteration_duration.............: avg=237.82ms min=208.89ms med=223.18ms max=1.15s p(90)=250.29ms p(95)=305.81ms
+    iterations.....................: 7572   42.022112/s
+    vus............................: 10     min=10        max=10
+    vus_max........................: 10     min=10        max=10
+
+    NETWORK
+    data_received..................: 103 MB 572 kB/s
+    data_sent......................: 705 kB 3.9 kB/s
+
+
+
+[2026-03-06 04:04:34]   Warm-up abgeschlossen
+[2026-03-06 04:04:34]   T2 gestartet → results/t2_sls_run2.json
+[2026-03-06 04:14:35]   Run 2 gespeichert: results/t2_sls_run2.json
+[2026-03-06 04:24:35]   Wartezeit abgeschlossen: Pause vor Run 3
+[2026-03-06 04:24:35]   T2 Run 3/3 gestartet
+
+
+  █ THRESHOLDS 
+
+    http_req_failed
+    ✓ 'rate<0.01' rate=0.00%
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 6869    38.111961/s
+    checks_succeeded...: 100.00% 6869 out of 6869
+    checks_failed......: 0.00%   0 out of 6869
+
+    ✓ Warm-up: status 200
+
+    HTTP
+    http_req_duration..............: avg=160.88ms min=120.15ms med=142.13ms max=1.63s p(90)=191.05ms p(95)=274.01ms
+      { expected_response:true }...: avg=160.88ms min=120.15ms med=142.13ms max=1.63s p(90)=191.05ms p(95)=274.01ms
+    http_req_failed................: 0.00%  0 out of 6869
+    http_reqs......................: 6869   38.111961/s
+
+    EXECUTION
+    iteration_duration.............: avg=262.26ms min=221.39ms med=243.18ms max=1.73s p(90)=292.75ms p(95)=377.11ms
+    iterations.....................: 6869   38.111961/s
+    vus............................: 10     min=10        max=10
+    vus_max........................: 10     min=10        max=10
+
+    NETWORK
+    data_received..................: 94 MB  520 kB/s
+    data_sent......................: 670 kB 3.7 kB/s
+
+
+
+[2026-03-06 04:27:36]   Warm-up abgeschlossen
+[2026-03-06 04:27:36]   T2 gestartet → results/t2_sls_run3.json
+[2026-03-06 04:37:36]   Run 3 gespeichert: results/t2_sls_run3.json
+[2026-03-06 04:37:36] T2 SLS abgeschlossen.
+═══════════════════════════════════════════════════════
+  T3 Ramp – SLS (1× ~12 min)
+═══════════════════════════════════════════════════════
+[2026-03-06 04:37:36] URL: https://x9j41qq8u8.execute-api.eu-central-1.amazonaws.com/prod
+[2026-03-06 04:37:36]   T3 gestartet → results/t3_sls.json
+[2026-03-06 04:49:37]   T3 SLS gespeichert: results/t3_sls.json
+═══════════════════════════════════════════════════════
+  Pause: Serverless Framework → OpenFaaS (10 min)
+═══════════════════════════════════════════════════════
+[2026-03-06 04:59:37]   Wartezeit abgeschlossen: Framework-Pause
+═══════════════════════════════════════════════════════
+  T2 Konstantlast – FAAS (3× 10 min)
+═══════════════════════════════════════════════════════
+[2026-03-06 04:59:37] URL: http://aeaf98ecd4b5b4f818de564cba531498-1255126595.eu-central-1.elb.amazonaws.com:8080/function/vlp-vehicle-service
+[2026-03-06 04:59:37]   T2 Run 1/3 gestartet
+
+
+  █ THRESHOLDS 
+
+    http_req_failed
+    ✓ 'rate<0.01' rate=0.00%
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 6428    35.682452/s
+    checks_succeeded...: 100.00% 6428 out of 6428
+    checks_failed......: 0.00%   0 out of 6428
+
+    ✓ Warm-up: status 200
+
+    HTTP
+    http_req_duration..............: avg=178.76ms min=133.94ms med=149.41ms max=1.8s p(90)=212.5ms  p(95)=276.54ms
+      { expected_response:true }...: avg=178.76ms min=133.94ms med=149.41ms max=1.8s p(90)=212.5ms  p(95)=276.54ms
+    http_req_failed................: 0.00%  0 out of 6428
+    http_reqs......................: 6428   35.682452/s
+
+    EXECUTION
+    iteration_duration.............: avg=280.07ms min=234.43ms med=250.55ms max=1.9s p(90)=314.45ms p(95)=378.98ms
+    iterations.....................: 6428   35.682452/s
+    vus............................: 10     min=10        max=10
+    vus_max........................: 10     min=10        max=10
+
+    NETWORK
+    data_received..................: 85 MB  469 kB/s
+    data_sent......................: 1.3 MB 7.4 kB/s
+
+
+
+[2026-03-06 05:02:37]   Warm-up abgeschlossen
+[2026-03-06 05:02:37]   T2 gestartet → results/t2_faas_run1.json
+[2026-03-06 05:12:38]   Run 1 gespeichert: results/t2_faas_run1.json
+[2026-03-06 05:22:38]   Wartezeit abgeschlossen: Pause vor Run 2
+[2026-03-06 05:22:38]   T2 Run 2/3 gestartet
+
+
+  █ THRESHOLDS 
+
+    http_req_failed
+    ✓ 'rate<0.01' rate=0.00%
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 12009   66.676942/s
+    checks_succeeded...: 100.00% 12009 out of 12009
+    checks_failed......: 0.00%   0 out of 12009
+
+    ✓ Warm-up: status 200
+
+    HTTP
+    http_req_duration..............: avg=48.78ms  min=23.32ms  med=34.63ms  max=917.24ms p(90)=62.01ms  p(95)=98.45ms 
+      { expected_response:true }...: avg=48.78ms  min=23.32ms  med=34.63ms  max=917.24ms p(90)=62.01ms  p(95)=98.45ms 
+    http_req_failed................: 0.00%  0 out of 12009
+    http_reqs......................: 12009  66.676942/s
+
+    EXECUTION
+    iteration_duration.............: avg=149.89ms min=124.19ms med=135.61ms max=1.01s    p(90)=163.45ms p(95)=202.03ms
+    iterations.....................: 12009  66.676942/s
+    vus............................: 10     min=10         max=10
+    vus_max........................: 10     min=10         max=10
+
+    NETWORK
+    data_received..................: 161 MB 894 kB/s
+    data_sent......................: 2.5 MB 14 kB/s
+
+
+
+[2026-03-06 05:25:38]   Warm-up abgeschlossen
+[2026-03-06 05:25:38]   T2 gestartet → results/t2_faas_run2.json
+[2026-03-06 05:35:38]   Run 2 gespeichert: results/t2_faas_run2.json
+[2026-03-06 05:48:39]   Wartezeit abgeschlossen: Pause vor Run 3
+[2026-03-06 05:48:39]   T2 Run 3/3 gestartet
+time="2026-03-06T05:55:13+01:00" level=warning msg="Request Failed" error="Get \"http://aeaf98ecd4b5b4f818de564cba531498-1255126595.eu-central-1.elb.amazonaws.com:8080/function/vlp-vehicle-service/vehicles?limit=50\": request timeout"
+time="2026-03-06T05:55:13+01:00" level=warning msg="Request Failed" error="Get \"http://aeaf98ecd4b5b4f818de564cba531498-1255126595.eu-central-1.elb.amazonaws.com:8080/function/vlp-vehicle-service/vehicles?limit=50\": request timeout"
+
+
+  █ THRESHOLDS 
+
+    http_req_failed
+    ✓ 'rate<0.01' rate=0.01%
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 11137  28.284716/s
+    checks_succeeded...: 99.98% 11135 out of 11137
+    checks_failed......: 0.01%  2 out of 11137
+
+    ✗ Warm-up: status 200
+      ↳  99% — ✓ 11135 / ✗ 2
+
+    HTTP
+    http_req_duration..............: avg=234.8ms  min=22.77ms  med=32.99ms  max=2m21s p(90)=83.41ms p(95)=166.48ms
+      { expected_response:true }...: avg=209.36ms min=22.77ms  med=32.99ms  max=1m48s p(90)=83.3ms  p(95)=166.01ms
+    http_req_failed................: 0.01%  2 out of 11137
+    http_reqs......................: 11137  28.284716/s
+
+    EXECUTION
+    iteration_duration.............: avg=166.02ms min=123.24ms med=134.08ms max=1m0s  p(90)=186ms   p(95)=267.69ms
+    iterations.....................: 11137  28.284716/s
+    vus............................: 2      min=2          max=10
+    vus_max........................: 10     min=10         max=10
+
+    NETWORK
+    data_received..................: 150 MB 381 kB/s
+    data_sent......................: 2.3 MB 5.9 kB/s
+
+
+
+[2026-03-06 05:55:13]   Warm-up abgeschlossen
+[2026-03-06 05:55:13]   T2 gestartet → results/t2_faas_run3.json
+[2026-03-06 06:05:14]   Run 3 gespeichert: results/t2_faas_run3.json
+[2026-03-06 06:05:14] T2 FAAS abgeschlossen.
+═══════════════════════════════════════════════════════
+  T3 Ramp – FAAS (1× ~12 min)
+═══════════════════════════════════════════════════════
+[2026-03-06 06:05:14] URL: http://aeaf98ecd4b5b4f818de564cba531498-1255126595.eu-central-1.elb.amazonaws.com:8080/function/vlp-vehicle-service
+[2026-03-06 06:05:14]   T3 gestartet → results/t3_faas.json
+[2026-03-06 06:17:14]   T3 FAAS gespeichert: results/t3_faas.json
+═══════════════════════════════════════════════════════
+  Testreihe abgeschlossen
+═══════════════════════════════════════════════════════
+[2026-03-06 06:17:14] T2/T3 Testreihe vollständig abgeschlossen.

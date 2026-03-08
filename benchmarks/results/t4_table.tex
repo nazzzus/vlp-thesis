@@ -1,0 +1,16 @@
+% Tabelle T4 Cold-Start – automatisch generiert von analyze_t4.py
+\begin{table}[htbp]
+\centering
+\caption{T4 Cold-Start-Messungen: Antwortzeit (t\_first) und Lambda-Initialisierungszeit (initDuration), n=5 Wiederholungen je Framework}
+\label{tab:t4_results}
+\begin{tabular}{lrrrrr}
+\toprule
+Framework & $\bar{x}$ t\_first & $\sigma$ t\_first & $\bar{x}$ initDuration & $\sigma$ initDuration & CV \\
+ & (ms) & (ms) & (ms) & (ms) & \\
+\midrule
+AWS SAM & 514.42 & 27.74 & 221.80 & 12.13 & 0.054 \checkmark \\
+Serverless FW & 457.33 & 134.89 & 232.98 & 22.98 & 0.295 $\uparrow$ \\
+OpenFaaS & 58.35 & 7.40 & n/a & n/a & 0.127 \checkmark \\
+\bottomrule
+\end{tabular}
+\end{table}
