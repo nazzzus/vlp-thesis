@@ -3,8 +3,10 @@
 # run_t2_t3.sh
 # Automatisierte T2 Konstantlast + T3 Ramp-Testreihe
 #
-# T2: 3× Konstantlast je Framework (50 VU, 10 min) → Hauptmessung
-# T3: 1× Ramp je Framework (0→50 VU, 12 min)
+# T2: 3× Konstantlast je Framework (30 VU, 10 min) → Hauptmessung
+# T3: 1× Ramp je Framework (0→30 VU, 12 min)
+#
+# DB wird vor jedem Run und vor T3 geleert → faire, reproduzierbare Bedingungen
 #
 # KEINE manuelle Intervention nötig – einfach starten und schlafen.
 # Alle Ergebnisse werden in results/ gespeichert.
@@ -29,9 +31,12 @@ RUN_PAUSE=600             # 10 min zwischen T2-Runs
 RESULTS_DIR="results"
 LOG_FILE="${RESULTS_DIR}/t2_t3_protokoll.log"
 
+T0_SCRIPT="tests/t0_baseline.js"
 WARMUP_SCRIPT="tests/t1_warmup.js"
 T2_SCRIPT="tests/t2_constant_load.js"
 T3_SCRIPT="tests/t3_ramp.js"
+
+MONGO_URI="mongodb+srv://nazirm10:nazirm10@vlp-benchmark-m10.bvhn2g.mongodb.net/"
 
 SAM_URL="${SAM_URL:-}"
 SLS_URL="${SLS_URL:-}"
@@ -70,6 +75,28 @@ countdown() {
   log "  Wartezeit abgeschlossen: $label"
 }
 
+reset_db() {
+  local reason=$1
+  echo "${YELLOW}  🗑  DB-Reset: ${reason}...${NC}"
+  log "  DB-Reset: ${reason}"
+
+  local result
+  result=$(mongosh "$MONGO_URI" --quiet --eval \
+    "db.getSiblingDB('vlp').vehicles.deleteMany({})" 2>&1)
+
+  local count
+  count=$(mongosh "$MONGO_URI" --quiet --eval \
+    "db.getSiblingDB('vlp').vehicles.countDocuments({})" 2>&1)
+
+  if [ "$count" = "0" ]; then
+    echo "${GREEN}  ✅ DB geleert (0 Dokumente)${NC}"
+    log "  DB-Reset erfolgreich – 0 Dokumente"
+  else
+    echo "${RED}  ⚠️  DB-Reset unsicher – ${count} Dokumente verbleiben${NC}"
+    log "  DB-Reset Warnung – ${count} Dokumente verbleiben"
+  fi
+}
+
 check_prerequisites() {
   log_section "Voraussetzungen prüfen"
   local ok=true
@@ -77,6 +104,10 @@ check_prerequisites() {
   command -v k6 &>/dev/null && \
     echo "${GREEN}  ✅ k6 gefunden${NC}" || \
     { echo "${RED}  ❌ k6 fehlt${NC}"; ok=false; }
+
+  command -v mongosh &>/dev/null && \
+    echo "${GREEN}  ✅ mongosh gefunden${NC}" || \
+    { echo "${RED}  ❌ mongosh fehlt (brew install mongosh)${NC}"; ok=false; }
 
   for var in SAM_URL SLS_URL FAAS_URL; do
     if [ -z "${(P)var}" ]; then
@@ -86,7 +117,7 @@ check_prerequisites() {
     fi
   done
 
-  for script in "$WARMUP_SCRIPT" "$T2_SCRIPT" "$T3_SCRIPT"; do
+  for script in "$T0_SCRIPT" "$WARMUP_SCRIPT" "$T2_SCRIPT" "$T3_SCRIPT"; do
     if [ ! -f "$script" ]; then
       echo "${RED}  ❌ Nicht gefunden: $script${NC}"; ok=false
     else
@@ -97,6 +128,67 @@ check_prerequisites() {
   mkdir -p "$RESULTS_DIR"
   [ "$ok" = false ] && { echo "\n${RED}Abbruch.${NC}"; exit 1; }
   log "Alle Voraussetzungen erfüllt."
+}
+
+# =============================================================================
+run_t0_checks() {
+  log_section "T0 Smoke-Test – alle Frameworks"
+
+  local all_ok=true
+
+  for entry in "sam:${SAM_URL}" "sls:${SLS_URL}" "faas:${FAAS_URL}"; do
+    local name="${entry%%:*}"
+    local url="${entry#*:}"
+    local name_upper=$(echo "$name" | tr '[:lower:]' '[:upper:]')
+
+    echo "${BLUE}  T0 → ${name_upper} (${url})${NC}"
+    log "  T0 gestartet: ${name_upper}"
+
+    local result
+    result=$(k6 run \
+      --env BASE_URL="$url" \
+      --vus 1 --iterations 1 \
+      "$T0_SCRIPT" 2>&1)
+
+    local exit_code=$?
+    local checks_ok=$(echo "$result" | grep -o "checks_succeeded.*" | head -1)
+    local failed=$(echo "$result" | grep "checks_failed" | grep -v "0.00%" | head -1)
+
+    if [ $exit_code -eq 0 ] && [ -z "$failed" ]; then
+      echo "${GREEN}  ✅ T0 ${name_upper}: alle Checks bestanden${NC}"
+      log "  T0 ${name_upper}: OK"
+    else
+      echo "${RED}  ❌ T0 ${name_upper}: Checks fehlgeschlagen!${NC}"
+      echo "$result" | grep -E "✓|✗|status" | head -10
+      log "  T0 ${name_upper}: FEHLER"
+      all_ok=false
+    fi
+  done
+
+  if [ "$all_ok" = false ]; then
+    echo "\n${RED}${BOLD}  Abbruch: T0 fehlgeschlagen. Bitte Deployments prüfen.${NC}\n"
+    exit 1
+  fi
+
+  echo "\n${GREEN}${BOLD}  ✅ T0 alle Frameworks OK – starte Haupttests.${NC}\n"
+  log "T0 alle Frameworks bestanden."
+}
+
+run_t1_check() {
+  local name=$1
+  local url=$2
+  local name_upper=$(echo "$name" | tr '[:lower:]' '[:upper:]')
+
+  echo "${BLUE}  T1 Warm-up Check (${name_upper})...${NC}"
+  log "  T1 Check gestartet: ${name_upper}"
+
+  local result
+  result=$(k6 run --env BASE_URL="$url" "$WARMUP_SCRIPT" 2>&1)
+  local rate=$(echo "$result" | grep "http_req_failed" | grep -o "rate=[0-9.]*%" | head -1)
+
+  echo "$result" | grep -E "✓|✗|rate=" | head -5
+  echo "${GREEN}  ✅ T1 Warm-up ${name_upper} abgeschlossen (${rate})${NC}"
+  log "  T1 ${name_upper} abgeschlossen: ${rate}"
 }
 
 # =============================================================================
@@ -112,24 +204,32 @@ run_t2_for_framework() {
     echo "\n${BOLD}  ── T2 Run ${run}/${RUNS} ─────────────────────────────────${NC}"
     log "  T2 Run ${run}/${RUNS} gestartet"
 
-    # Warm-up
-    echo "${BLUE}  [1/2] Warm-up (3 min)...${NC}"
-    k6 run --env BASE_URL="$url" --quiet "$WARMUP_SCRIPT" >> "$LOG_FILE" 2>&1 || true
-    echo "${GREEN}  ✅ Warm-up abgeschlossen${NC}"
-    log "  Warm-up abgeschlossen"
+    # DB vor jedem Run leeren
+    reset_db "vor Run ${run}/${RUNS} (${name_upper})"
+
+    # Warm-up via T1
+    run_t1_check "$name" "$url"
 
     # T2 Konstantlast
     local outfile="${RESULTS_DIR}/t2_${name}_run${run}.json"
-    echo "${BLUE}  [2/2] Konstantlast (10 min, 50 VU)...${NC}"
+    local ts_start=$(date '+%Y-%m-%d %H:%M:%S')
+    local ts_start_epoch=$(date +%s)
+    echo "${BLUE}  [2/2] Konstantlast (10 min, 30 VU)...${NC}"
+    echo "${YELLOW}  T2 Start-Timestamp: ${ts_start}${NC}"
     log "  T2 gestartet → $outfile"
+    log "  TIMESTAMP_START t2_${name}_run${run}: ${ts_start} (epoch: ${ts_start_epoch})"
 
     k6 run \
       --env BASE_URL="$url" \
       --out "json=${outfile}" \
       "$T2_SCRIPT" || true
 
+    local ts_end=$(date '+%Y-%m-%d %H:%M:%S')
+    local ts_end_epoch=$(date +%s)
     echo "${GREEN}  ✅ Run ${run} gespeichert: ${outfile}${NC}"
+    echo "${YELLOW}  T2 End-Timestamp:   ${ts_end}${NC}"
     log "  Run ${run} gespeichert: $outfile"
+    log "  TIMESTAMP_END   t2_${name}_run${run}: ${ts_end} (epoch: ${ts_end_epoch})"
 
     # Pause zwischen Runs (außer nach dem letzten)
     if [ "$run" -lt "$RUNS" ]; then
@@ -150,8 +250,11 @@ run_t3_for_framework() {
   log_section "T3 Ramp – ${name_upper} (1× ~12 min)"
   log "URL: $url"
 
+  # DB vor T3 leeren
+  reset_db "vor T3 (${name_upper})"
+
   local outfile="${RESULTS_DIR}/t3_${name}.json"
-  echo "${BLUE}  Ramp-Test läuft (0→50 VU, 12 min)...${NC}"
+  echo "${BLUE}  Ramp-Test läuft (0→30 VU, 12 min)...${NC}"
   log "  T3 gestartet → $outfile"
 
   k6 run \
@@ -171,8 +274,8 @@ echo "  ║   VLP – T2 Konstantlast + T3 Ramp (automatisiert)  ║"
 echo "  ║   SAM → Serverless Framework → OpenFaaS             ║"
 echo "  ╚══════════════════════════════════════════════════════╝"
 echo "${NC}"
-echo "  T2: 3× 10 min Konstantlast je Framework"
-echo "  T3: 1× 12 min Ramp je Framework"
+echo "  T2: 3× 10 min Konstantlast je Framework (30 VU, DB-Reset vor jedem Run)"
+echo "  T3: 1× 12 min Ramp je Framework (0→30 VU, DB-Reset vor T3)"
 echo "  Gesamtdauer: ca. ${BOLD}3 Stunden${NC}"
 echo ""
 echo "${YELLOW}  Keine manuelle Intervention nötig.${NC}"
@@ -186,6 +289,12 @@ echo "SLS_URL:  $SLS_URL"  >> "$LOG_FILE"
 echo "FAAS_URL: $FAAS_URL" >> "$LOG_FILE"
 
 check_prerequisites
+
+# T0 Smoke-Test – alle Frameworks müssen antworten
+run_t0_checks
+
+# Initiales DB-Reset vor dem ersten Framework
+reset_db "initialer Reset vor Testbeginn"
 
 # ── AWS SAM ───────────────────────────────────────────────────────────────────
 run_t2_for_framework "sam" "$SAM_URL"
@@ -219,5 +328,5 @@ ls -1 "${RESULTS_DIR}"/t2_*.json 2>/dev/null | awk '{print "    " $0}' || true
 ls -1 "${RESULTS_DIR}"/t3_*.json 2>/dev/null | awk '{print "    " $0}' || true
 
 echo ""
-echo "${YELLOW}  Nächster Schritt: Auswertung mit analyze_t2.py${NC}"
+echo "${YELLOW}  Nächster Schritt: Auswertung mit analyze_all.py${NC}"
 log "T2/T3 Testreihe vollständig abgeschlossen."

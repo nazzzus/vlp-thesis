@@ -8,11 +8,9 @@ functions:
     image: ghcr.io/nazzzus/vlp-vehicle-service:openfaas
     skip_build: true
     skip_push: true
-    secrets:
-      - mongodb-uri
     environment:
       fprocess: "/usr/bin/entrypoint.sh"
       PORT: "8082"
-      MONGO_URI: "mongodb+srv://nazir_db_user:Nasu2026@cluster0.cdvnklb.mongodb.net/vlp?retryWrites=true&w=majority&appName=Cluster0"
+      MONGO_URI: "mongodb+srv://nazirm10:nazirm10@vlp-benchmark-m10.bvhn2g.mongodb.net/vlp"
       MONGO_DB: "vlp"
       MONGO_COLLECTION: "vehicles"

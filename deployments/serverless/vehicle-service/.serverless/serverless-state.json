@@ -14,7 +14,7 @@
       "timeout": 30,
       "environment": {
         "SERVICE_NAME": "vehicle-service",
-        "MONGO_URI": "mongodb+srv://nazir_db_user:Nasu2026@cluster0.cdvnklb.mongodb.net/vlp?retryWrites=true&w=majority&appName=Cluster0",
+        "MONGO_URI": "mongodb+srv://nazirm10:nazirm10@vlp-benchmark-m10.bvhn2g.mongodb.net/vlp",
         "MONGO_DB": "vlp",
         "MONGO_COLLECTION": "vehicles",
         "HTTP_PORT": "8081"
@@ -184,7 +184,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/vlp-vehicle-service-sls/prod/1772035595748-2026-02-25T16:06:35.748Z/vlp-vehicle-service-sls.zip"
+                "S3Key": "serverless/vlp-vehicle-service-sls/prod/1773069604174-2026-03-09T15:20:04.174Z/vlp-vehicle-service-sls.zip"
               },
               "Handler": "bootstrap",
               "Runtime": "provided.al2023",
@@ -197,7 +197,7 @@
               "Environment": {
                 "Variables": {
                   "SERVICE_NAME": "vehicle-service",
-                  "MONGO_URI": "mongodb+srv://nazir_db_user:Nasu2026@cluster0.cdvnklb.mongodb.net/vlp?retryWrites=true&w=majority&appName=Cluster0",
+                  "MONGO_URI": "mongodb+srv://nazirm10:nazirm10@vlp-benchmark-m10.bvhn2g.mongodb.net/vlp",
                   "MONGO_DB": "vlp",
                   "MONGO_COLLECTION": "vehicles",
                   "HTTP_PORT": "8081"
@@ -214,14 +214,14 @@
               "ApiLogGroup"
             ]
           },
-          "ApiLambdaVersionW1TYzXNo7RA61R9GlDH3J16OSIEthi9KTIJCRIh4c": {
+          "ApiLambdaVersionPoIW2n3rtdnBykKhMK22qBH8mS0VZVzm8ZEZG1lvPv8": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "ApiLambdaFunction"
               },
-              "CodeSha256": "dCF2hGhi67rpTkqJIsTmQmrb3xThVYjNlStML/rcA9s="
+              "CodeSha256": "1nZLKvSyxx4RtyrYyB1X8kxrMHAvWDzMrh2dpnmaFyY="
             }
           },
           "ApiGatewayRestApi": {
@@ -749,7 +749,7 @@
               "ApiLambdaPermissionApiGateway"
             ]
           },
-          "ApiGatewayDeployment1772035595054": {
+          "ApiGatewayDeployment1773069602929": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -820,7 +820,7 @@
           "ApiLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "ApiLambdaVersionW1TYzXNo7RA61R9GlDH3J16OSIEthi9KTIJCRIh4c"
+              "Ref": "ApiLambdaVersionPoIW2n3rtdnBykKhMK22qBH8mS0VZVzm8ZEZG1lvPv8"
             },
             "Export": {
               "Name": "sls-vlp-vehicle-service-sls-prod-ApiLambdaFunctionQualifiedArn"
@@ -1094,7 +1094,7 @@
         "timeout": 30,
         "runtime": "provided.al2023",
         "vpc": {},
-        "versionLogicalId": "ApiLambdaVersionW1TYzXNo7RA61R9GlDH3J16OSIEthi9KTIJCRIh4c"
+        "versionLogicalId": "ApiLambdaVersionPoIW2n3rtdnBykKhMK22qBH8mS0VZVzm8ZEZG1lvPv8"
       }
     },
     "configValidationMode": "warn",
@@ -1116,7 +1116,7 @@
         ],
         "artifactsS3KeyDirname": "serverless/vlp-vehicle-service-sls/prod/code-artifacts",
         "artifact": "/Users/nazirsultani/Desktop/Projects/bachelorthesis/vlp/deployments/serverless/vehicle-service/.serverless/vlp-vehicle-service-sls.zip",
-        "artifactDirectoryName": "serverless/vlp-vehicle-service-sls/prod/1772035595748-2026-02-25T16:06:35.748Z"
+        "artifactDirectoryName": "serverless/vlp-vehicle-service-sls/prod/1773069604174-2026-03-09T15:20:04.174Z"
       }
     },
     "layers": {},
@@ -1124,7 +1124,7 @@
     "artifact": "/Users/nazirsultani/Desktop/Projects/bachelorthesis/vlp/deployments/serverless/vehicle-service/.serverless/vlp-vehicle-service-sls.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/vlp-vehicle-service-sls/prod/1772035595748-2026-02-25T16:06:35.748Z",
+    "artifactDirectoryName": "serverless/vlp-vehicle-service-sls/prod/1773069604174-2026-03-09T15:20:04.174Z",
     "artifact": "vlp-vehicle-service-sls.zip"
   }
 }

@@ -7,14 +7,22 @@
 - Umgebungsvariablen für die Endpunkt-URLs verfügbar
 
 ```bash
-export SAM_URL=https://<api-id>.execute-api.eu-central-1.amazonaws.com/prod
-export SLS_URL=https://<api-id>.execute-api.eu-central-1.amazonaws.com/prod
-export FAAS_URL=https://<alb-dns-name>
+export SAM_URL=https://ktqmoos1s6.execute-api.eu-central-1.amazonaws.com/Prod
+export SLS_URL=https://e9dfzfg50g.execute-api.eu-central-1.amazonaws.com/prod
+export FAAS_URL=http://aeaf98ecd4b5b4f818de564cba531498-1255126595.eu-central-1.elb.amazonaws.com:8080/function/vlp-vehicle-service
+
 ```
 
 ---
 
 ## Vorbereitung vor allen Tests (einmalig)
+// DB Clearen -> 
+mongosh "mongodb+srv://nazirm10:nazirm10@vlp-benchmark-m10.bvhn2g.mongodb.net/vlp" \
+--eval "db.vehicles.deleteMany({})"
+
+// DB count
+mongosh "mongodb+srv://nazirm10:nazirm10@vlp-benchmark-m10.bvhn2g.mongodb.net/" 
+--eval "db.vehicles.countDocuments({})"
 
 Datenbankzustand zurücksetzen (500 Einträge, deterministischer Seed):
 ```bash

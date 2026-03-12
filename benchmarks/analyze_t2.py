@@ -195,7 +195,7 @@ def make_boxplot(ax, data_dict, title, ylabel="Latenz (ms)"):
 make_boxplot(axes[0], all_data,  "T2 – Gesamtlatenz (alle Requests)")
 make_boxplot(axes[1], get_data,  "T2 – GET /vehicles Latenz")
 
-fig.suptitle("T2 Konstantlast (10 VUs, 3×10 min) – Latenzverteilung je Framework",
+fig.suptitle("T2 Konstantlast (30 VUs, 3×10 min) – Latenzverteilung je Framework",
              fontsize=13, fontweight="bold", y=1.01)
 plt.tight_layout()
 
@@ -250,7 +250,7 @@ with open(latex_path, "w") as f:
     f.write("% Automatisch generiert von analyze_t2.py\n\n")
     f.write("\\begin{table}[htbp]\n")
     f.write("  \\centering\n")
-    f.write("  \\caption{T2 Konstantlast: Latenz-Kennzahlen je Framework (alle Requests, 10 VUs, 3$\\times$10\\,min)}\n")
+    f.write("  \\caption{T2 Konstantlast: Latenz-Kennzahlen je Framework (alle Requests, 30 VUs, 3$\times$10\\,min)}\n")
     f.write("  \\label{tab:t2_latenz}\n")
     f.write("  \\begin{tabular}{lrrrrrrr}\n")
     f.write("    \\toprule\n")

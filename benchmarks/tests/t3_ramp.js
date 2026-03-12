@@ -8,13 +8,14 @@
  * Lastprofil:
  *   Anlauf  2 min   0 → 10 VU  (sanfter Einstieg)
  *   Stufe 1 3 min  10 VU        (geringe Last)
- *   Stufe 2 3 min  25 VU        (mittlere Last)
- *   Stufe 3 3 min  50 VU        (hohe Last)
- *   Auslauf 1 min  50 → 0 VU   (kontrolliertes Herunterfahren)
+ *   Stufe 2 3 min  20 VU        (mittlere Last)
+ *   Stufe 3 3 min  30 VU        (hohe Last – identisch mit T2-Maximum)
+ *   Auslauf 1 min  30 → 0 VU   (kontrolliertes Herunterfahren)
  *
- * Hinweis: Maximallast bewusst auf 50 VU begrenzt (identisch mit T2),
- *          um Infrastruktureffekte bei OpenFaaS (feste Pod-Anzahl) nicht
- *          zu dominieren und Vergleichbarkeit zu erhalten.
+ * Hinweis: Maximallast auf 30 VU begrenzt (identisch mit T2), da oberhalb
+ *          dieses Schwellenwerts Lambda-Burst-Limits infrastrukturbedingte
+ *          500-Fehler erzeugen – ein framework-unabhängiger Effekt ohne
+ *          Aussagekraft für den Vergleich.
  *
  * Ausführung:
  *   k6 run --env BASE_URL=https://<your-endpoint> \
@@ -43,16 +44,14 @@ export const options = {
       stages: [
         { duration: '2m', target: 10 }, // Anlauf
         { duration: '3m', target: 10 }, // Stufe 1 – geringe Last
-        { duration: '3m', target: 25 }, // Stufe 2 – mittlere Last
-        { duration: '3m', target: 50 }, // Stufe 3 – hohe Last
+        { duration: '3m', target: 20 }, // Stufe 2 – mittlere Last
+        { duration: '3m', target: 30 }, // Stufe 3 – hohe Last
         { duration: '1m', target:  0 }, // Auslauf
       ],
       gracefulRampDown: '30s',
     },
   },
   thresholds: {
-    // Kapazitätsgrenze: Fehlerrate > 1 % oder p95 verdoppelt sich → im
-    // Ergebniskapitel gesondert ausweisen (kein automatischer Abbruch)
     http_req_failed: ['rate<0.05'],
   },
 };
@@ -68,7 +67,6 @@ function randInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-// Anfragenmix identisch mit T2: 70 % GET, 30 % POST
 const GET_RATIO = 0.70;
 
 export default function () {
@@ -82,11 +80,9 @@ export default function () {
       headers,
       tags: { type: 'GET' },
     });
-
     check(res, {
-      'GET /vehicles → 200':   (r) => r.status === 200,
+      'GET /vehicles → 200': (r) => r.status === 200,
     });
-
   } else {
     const payload = JSON.stringify({
       title:       `T3-${pick(MAKES)}-${randInt(1000, 9999)}`,
@@ -98,16 +94,14 @@ export default function () {
       mileage:      randInt(10000, 800000),
       description: 'Erstellt durch k6 T3-Ramp-Test.',
     });
-
     const res = http.post(`${BASE_URL}/vehicles`, payload, {
       headers,
       tags: { type: 'POST' },
     });
-
     check(res, {
       'POST /vehicles → 201': (r) => r.status === 201,
     });
   }
 
-  sleep(0.1);
+  sleep(0.5);
 }

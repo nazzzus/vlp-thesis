@@ -41,7 +41,7 @@ export default function () {
   const listRes = http.get(`${BASE_URL}/vehicles?limit=50`, { headers });
   check(listRes, {
     'GET /vehicles → 200':          (r) => r.status === 200,
-    'GET /vehicles → JSON-Array':   (r) => Array.isArray(JSON.parse(r.body)),
+    'GET /vehicles → JSON-Array':   (r) => { try { return Array.isArray(JSON.parse(r.body)); } catch(_) { return false; } },
   });
 
   // 4) Create Vehicle

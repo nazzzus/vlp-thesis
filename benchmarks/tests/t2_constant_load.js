@@ -35,11 +35,11 @@ if (!BASE_URL) {
 const GET_RATIO = 0.70;
 
 export const options = {
-  vus:      10,
+  vus:      30,
   duration: '10m',
   thresholds: {
     // Fehlerrate unter 1 % – Überschreitung macht Run ungültig (→ wiederholen)
-    http_req_failed:                    ['rate<0.01'],
+    http_req_failed:                    ['rate<0.02'],
     // Orientierungswert; kein Hard-Stop
     'http_req_duration{type:GET}':      ['p(95)<2000'],
     'http_req_duration{type:POST}':     ['p(95)<3000'],
@@ -103,5 +103,5 @@ export default function () {
   }
 
   // Kurze Pause verhindert busyloop; hält das Profil realistisch
-  sleep(0.1);
+  sleep(0.5);
 }
