@@ -1,0 +1,115 @@
+VLP T4 Protokoll – Tue Mar 10 01:12:01 CET 2026
+SAM_URL:  https://ktqmoos1s6.execute-api.eu-central-1.amazonaws.com/Prod
+SLS_URL:  https://e9dfzfg50g.execute-api.eu-central-1.amazonaws.com/prod
+FAAS_URL: http://aeaf98ecd4b5b4f818de564cba531498-1255126595.eu-central-1.elb.amazonaws.com:8080/function/vlp-vehicle-service
+p50_warm: SAM=48.5ms | SLS=53.0ms | FaaS=35.6ms
+[2026-03-10 01:12:01] Voraussetzungen erfüllt. T4 startet.
+═══════════════════════════════════════════════════════
+  T4 Cold-Start – SAM (5× Runs)
+═══════════════════════════════════════════════════════
+[2026-03-10 01:12:01] URL: https://ktqmoos1s6.execute-api.eu-central-1.amazonaws.com/Prod | p50_warm: 48.5ms
+[2026-03-10 01:12:01]   T4 Run 1/5 gestartet
+[2026-03-10 01:15:02]   Warm-up abgeschlossen
+[2026-03-10 01:30:02]   Wartezeit abgeschlossen: Abkühlphase Run 1/5
+[2026-03-10 01:30:02]   TIMESTAMP_T4 t4_sam_run1: 2026-03-10 01:30:02 (epoch: 1773102602)
+[2026-03-10 01:30:03]   t4_sam_run1: Extraktion fehlgeschlagen
+[2026-03-10 01:30:03]   Run 1 gespeichert: results/t4_sam_run1.json
+[2026-03-10 01:30:03]   T4 Run 2/5 gestartet
+[2026-03-10 01:33:04]   Warm-up abgeschlossen
+[2026-03-10 01:48:04]   Wartezeit abgeschlossen: Abkühlphase Run 2/5
+[2026-03-10 01:48:04]   TIMESTAMP_T4 t4_sam_run2: 2026-03-10 01:48:04 (epoch: 1773103684)
+[2026-03-10 01:48:05]   t4_sam_run2: Extraktion fehlgeschlagen
+[2026-03-10 01:48:05]   Run 2 gespeichert: results/t4_sam_run2.json
+[2026-03-10 01:48:05]   T4 Run 3/5 gestartet
+[2026-03-10 01:51:05]   Warm-up abgeschlossen
+[2026-03-10 02:06:05]   Wartezeit abgeschlossen: Abkühlphase Run 3/5
+[2026-03-10 02:06:05]   TIMESTAMP_T4 t4_sam_run3: 2026-03-10 02:06:05 (epoch: 1773104765)
+[2026-03-10 02:06:06]   t4_sam_run3: Extraktion fehlgeschlagen
+[2026-03-10 02:06:06]   Run 3 gespeichert: results/t4_sam_run3.json
+[2026-03-10 02:06:06]   T4 Run 4/5 gestartet
+[2026-03-10 02:09:07]   Warm-up abgeschlossen
+[2026-03-10 02:24:07]   Wartezeit abgeschlossen: Abkühlphase Run 4/5
+[2026-03-10 02:24:07]   TIMESTAMP_T4 t4_sam_run4: 2026-03-10 02:24:07 (epoch: 1773105847)
+[2026-03-10 02:24:08]   t4_sam_run4: Extraktion fehlgeschlagen
+[2026-03-10 02:24:08]   Run 4 gespeichert: results/t4_sam_run4.json
+[2026-03-10 02:24:08]   T4 Run 5/5 gestartet
+[2026-03-10 02:27:09]   Warm-up abgeschlossen
+[2026-03-10 02:42:08]   Wartezeit abgeschlossen: Abkühlphase Run 5/5
+[2026-03-10 02:42:08]   TIMESTAMP_T4 t4_sam_run5: 2026-03-10 02:42:08 (epoch: 1773106928)
+[2026-03-10 02:42:09]   t4_sam_run5: Extraktion fehlgeschlagen
+[2026-03-10 02:42:09]   Run 5 gespeichert: results/t4_sam_run5.json
+[2026-03-10 02:42:09] T4 SAM abgeschlossen.
+═══════════════════════════════════════════════════════
+  T4 Cold-Start – SLS (5× Runs)
+═══════════════════════════════════════════════════════
+[2026-03-10 02:42:09] URL: https://e9dfzfg50g.execute-api.eu-central-1.amazonaws.com/prod | p50_warm: 53.0ms
+[2026-03-10 02:42:09]   T4 Run 1/5 gestartet
+[2026-03-10 02:45:10]   Warm-up abgeschlossen
+[2026-03-10 03:00:10]   Wartezeit abgeschlossen: Abkühlphase Run 1/5
+[2026-03-10 03:00:10]   TIMESTAMP_T4 t4_sls_run1: 2026-03-10 03:00:10 (epoch: 1773108010)
+[2026-03-10 03:00:11]   t4_sls_run1: Extraktion fehlgeschlagen
+[2026-03-10 03:00:11]   Run 1 gespeichert: results/t4_sls_run1.json
+[2026-03-10 03:00:11]   T4 Run 2/5 gestartet
+[2026-03-10 03:03:12]   Warm-up abgeschlossen
+[2026-03-10 03:18:11]   Wartezeit abgeschlossen: Abkühlphase Run 2/5
+[2026-03-10 03:18:11]   TIMESTAMP_T4 t4_sls_run2: 2026-03-10 03:18:11 (epoch: 1773109091)
+[2026-03-10 03:18:12]   t4_sls_run2: Extraktion fehlgeschlagen
+[2026-03-10 03:18:12]   Run 2 gespeichert: results/t4_sls_run2.json
+[2026-03-10 03:18:12]   T4 Run 3/5 gestartet
+[2026-03-10 03:21:13]   Warm-up abgeschlossen
+[2026-03-10 03:36:12]   Wartezeit abgeschlossen: Abkühlphase Run 3/5
+[2026-03-10 03:36:12]   TIMESTAMP_T4 t4_sls_run3: 2026-03-10 03:36:12 (epoch: 1773110172)
+[2026-03-10 03:36:13]   t4_sls_run3: Extraktion fehlgeschlagen
+[2026-03-10 03:36:13]   Run 3 gespeichert: results/t4_sls_run3.json
+[2026-03-10 03:36:13]   T4 Run 4/5 gestartet
+[2026-03-10 03:39:14]   Warm-up abgeschlossen
+[2026-03-10 03:54:14]   Wartezeit abgeschlossen: Abkühlphase Run 4/5
+[2026-03-10 03:54:14]   TIMESTAMP_T4 t4_sls_run4: 2026-03-10 03:54:14 (epoch: 1773111254)
+[2026-03-10 03:54:15]   t4_sls_run4: Extraktion fehlgeschlagen
+[2026-03-10 03:54:15]   Run 4 gespeichert: results/t4_sls_run4.json
+[2026-03-10 03:54:15]   T4 Run 5/5 gestartet
+[2026-03-10 03:57:16]   Warm-up abgeschlossen
+[2026-03-10 04:12:15]   Wartezeit abgeschlossen: Abkühlphase Run 5/5
+[2026-03-10 04:12:15]   TIMESTAMP_T4 t4_sls_run5: 2026-03-10 04:12:15 (epoch: 1773112335)
+[2026-03-10 04:12:17]   t4_sls_run5: Extraktion fehlgeschlagen
+[2026-03-10 04:12:17]   Run 5 gespeichert: results/t4_sls_run5.json
+[2026-03-10 04:12:17] T4 SLS abgeschlossen.
+═══════════════════════════════════════════════════════
+  T4 Cold-Start – FAAS (5× Runs)
+═══════════════════════════════════════════════════════
+[2026-03-10 04:12:17] URL: http://aeaf98ecd4b5b4f818de564cba531498-1255126595.eu-central-1.elb.amazonaws.com:8080/function/vlp-vehicle-service | p50_warm: 35.6ms
+[2026-03-10 04:12:17]   T4 Run 1/5 gestartet
+[2026-03-10 04:15:17]   Warm-up abgeschlossen
+[2026-03-10 04:30:17]   Wartezeit abgeschlossen: Abkühlphase Run 1/5
+[2026-03-10 04:30:17]   TIMESTAMP_T4 t4_faas_run1: 2026-03-10 04:30:17 (epoch: 1773113417)
+[2026-03-10 04:30:17]   t4_faas_run1: Extraktion fehlgeschlagen
+[2026-03-10 04:30:17]   Run 1 gespeichert: results/t4_faas_run1.json
+[2026-03-10 04:30:17]   T4 Run 2/5 gestartet
+[2026-03-10 04:33:18]   Warm-up abgeschlossen
+[2026-03-10 04:48:18]   Wartezeit abgeschlossen: Abkühlphase Run 2/5
+[2026-03-10 04:48:18]   TIMESTAMP_T4 t4_faas_run2: 2026-03-10 04:48:18 (epoch: 1773114498)
+[2026-03-10 04:48:18]   t4_faas_run2: Extraktion fehlgeschlagen
+[2026-03-10 04:48:18]   Run 2 gespeichert: results/t4_faas_run2.json
+[2026-03-10 04:48:18]   T4 Run 3/5 gestartet
+[2026-03-10 04:51:19]   Warm-up abgeschlossen
+[2026-03-10 05:06:19]   Wartezeit abgeschlossen: Abkühlphase Run 3/5
+[2026-03-10 05:06:19]   TIMESTAMP_T4 t4_faas_run3: 2026-03-10 05:06:19 (epoch: 1773115579)
+[2026-03-10 05:06:19]   t4_faas_run3: Extraktion fehlgeschlagen
+[2026-03-10 05:06:19]   Run 3 gespeichert: results/t4_faas_run3.json
+[2026-03-10 05:06:19]   T4 Run 4/5 gestartet
+[2026-03-10 05:09:20]   Warm-up abgeschlossen
+[2026-03-10 05:24:20]   Wartezeit abgeschlossen: Abkühlphase Run 4/5
+[2026-03-10 05:24:20]   TIMESTAMP_T4 t4_faas_run4: 2026-03-10 05:24:20 (epoch: 1773116660)
+[2026-03-10 05:24:21]   t4_faas_run4: Extraktion fehlgeschlagen
+[2026-03-10 05:24:21]   Run 4 gespeichert: results/t4_faas_run4.json
+[2026-03-10 05:24:21]   T4 Run 5/5 gestartet
+[2026-03-10 05:27:22]   Warm-up abgeschlossen
+[2026-03-10 05:42:22]   Wartezeit abgeschlossen: Abkühlphase Run 5/5
+[2026-03-10 05:42:22]   TIMESTAMP_T4 t4_faas_run5: 2026-03-10 05:42:22 (epoch: 1773117742)
+[2026-03-10 05:42:23]   t4_faas_run5: Extraktion fehlgeschlagen
+[2026-03-10 05:42:23]   Run 5 gespeichert: results/t4_faas_run5.json
+[2026-03-10 05:42:23] T4 FAAS abgeschlossen.
+═══════════════════════════════════════════════════════
+  T4 Testreihe abgeschlossen
+═══════════════════════════════════════════════════════
+[2026-03-10 05:42:23] T4 Testreihe vollständig abgeschlossen.

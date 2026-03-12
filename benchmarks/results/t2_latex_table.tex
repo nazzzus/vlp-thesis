@@ -1,0 +1,34 @@
+% T2 Konstantlast – Latenz-Kennzahlen
+% Automatisch generiert von analyze_t2.py
+
+\begin{table}[htbp]
+  \centering
+  \caption{T2 Konstantlast: Latenz-Kennzahlen je Framework (alle Requests, 30 VUs, 3$	imes$10\,min)}
+  \label{tab:t2_latenz}
+  \begin{tabular}{lrrrrrrr}
+    \toprule
+    Framework & $n$ & Avg (ms) & Median (ms) & p90 (ms) & p95 (ms) & p99 (ms) & Std (ms) \\
+    \midrule
+    SAM & 96,957 & 52.0 & 48.5 & 59.7 & 67.4 & 153.3 & 19.6 \\
+    SLS & 96,460 & 57.4 & 53.0 & 68.9 & 75.2 & 150.8 & 23.3 \\
+    OpenFaaS & 99,812 & 38.9 & 35.6 & 45.7 & 53.8 & 141.0 & 19.7 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+% T2 – GET vs POST Latenz
+
+\begin{table}[htbp]
+  \centering
+  \caption{T2 Konstantlast: GET vs.\ POST Latenz je Framework}
+  \label{tab:t2_get_post}
+  \begin{tabular}{lrrrr}
+    \toprule
+    Framework & GET avg (ms) & GET p95 (ms) & POST avg (ms) & POST p95 (ms) \\
+    \midrule
+    SAM & 53.6 & 69.4 & 48.4 & 60.3 \\
+    SLS & 59.6 & 77.4 & 52.2 & 68.2 \\
+    OpenFaaS & 40.7 & 56.0 & 34.8 & 46.1 \\
+    \bottomrule
+  \end{tabular}
+\end{table}

@@ -1,0 +1,30 @@
+\begin{table}[htbp]
+\centering
+\caption{T4 -- Cold-Start-Einzelmessungen ($t_{\mathrm{first}}$ und $\Delta t_{\mathrm{cold}}$)}
+\label{tab:t4-einzelmessungen}
+\begin{tabularx}{\textwidth}{llXXX}
+\toprule
+\textbf{Framework} & \textbf{Run} & \textbf{$t_{\mathrm{first}}$~(ms)} & \textbf{$p_{50}^{\mathrm{warm}}$~(ms)} & \textbf{$\Delta t_{\mathrm{cold}}$~(ms)} \\
+\midrule
+    AWS~SAM & 1 & 467.8 & 48.5 & 419.3 \\
+     & 2 & 424.4 & 48.5 & 375.9 \\
+     & 3 & 447.7 & 48.5 & 399.2 \\
+     & 4 & 527.3 & 48.5 & 478.8 \\
+     & 5 & 464.4 & 48.5 & 415.9 \\
+    \midrule
+    Serverless~FW & 1 & 566.0 & 53.0 & 513.0 \\
+     & 2 & 386.4 & 53.0 & 333.4 \\
+     & 3 & 475.3 & 53.0 & 422.3 \\
+     & 4 & 459.9 & 53.0 & 406.9 \\
+     & 5 & 580.0 & 53.0 & 527.0 \\
+    \midrule
+    OpenFaaS & 1$^{\dagger}$ & 35.3 & 35.6 & -0.3 \\
+     & 2$^{\dagger}$ & 35.0 & 35.6 & -0.6 \\
+     & 3$^{\dagger}$ & 36.8 & 35.6 & 1.2 \\
+     & 4$^{\dagger}$ & 32.0 & 35.6 & -3.6 \\
+     & 5$^{\dagger}$ & 34.6 & 35.6 & -1.0 \\
+    \midrule
+    \multicolumn{5}{l}{\small $^{\dagger}$ Ausreißer: Lambda-Instanz noch warm; aus bereinigtem Mittelwert ausgeschlossen.} \\
+\bottomrule
+\end{tabularx}
+\end{table}

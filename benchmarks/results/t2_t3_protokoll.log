@@ -1,0 +1,158 @@
+VLP T2/T3 Protokoll – Mon Mar  9 20:52:39 CET 2026
+SAM_URL:  https://ktqmoos1s6.execute-api.eu-central-1.amazonaws.com/Prod
+SLS_URL:  https://e9dfzfg50g.execute-api.eu-central-1.amazonaws.com/prod
+FAAS_URL: http://aeaf98ecd4b5b4f818de564cba531498-1255126595.eu-central-1.elb.amazonaws.com:8080/function/vlp-vehicle-service
+═══════════════════════════════════════════════════════
+  Voraussetzungen prüfen
+═══════════════════════════════════════════════════════
+[2026-03-09 20:52:39] Alle Voraussetzungen erfüllt.
+═══════════════════════════════════════════════════════
+  T0 Smoke-Test – alle Frameworks
+═══════════════════════════════════════════════════════
+[2026-03-09 20:52:39]   T0 gestartet: SAM
+[2026-03-09 20:52:40]   T0 SAM: OK
+[2026-03-09 20:52:40]   T0 gestartet: SLS
+[2026-03-09 20:52:41]   T0 SLS: OK
+[2026-03-09 20:52:41]   T0 gestartet: FAAS
+[2026-03-09 20:52:41]   T0 FAAS: OK
+[2026-03-09 20:52:41] T0 alle Frameworks bestanden.
+[2026-03-09 20:52:41]   DB-Reset: initialer Reset vor Testbeginn
+[2026-03-09 20:52:54]   DB-Reset erfolgreich – 0 Dokumente
+═══════════════════════════════════════════════════════
+  T2 Konstantlast – SAM (3× 10 min)
+═══════════════════════════════════════════════════════
+[2026-03-09 20:52:54] URL: https://ktqmoos1s6.execute-api.eu-central-1.amazonaws.com/Prod
+[2026-03-09 20:52:54]   T2 Run 1/3 gestartet
+[2026-03-09 20:52:54]   DB-Reset: vor Run 1/3 (SAM)
+[2026-03-09 20:52:56]   DB-Reset erfolgreich – 0 Dokumente
+[2026-03-09 20:52:56]   T1 Check gestartet: SAM
+[2026-03-09 20:55:57]   T1 SAM abgeschlossen: 
+[2026-03-09 20:55:57]   T2 gestartet → results/t2_sam_run1.json
+[2026-03-09 20:55:57]   TIMESTAMP_START t2_sam_run1: 2026-03-09 20:55:57 (epoch: 1773086157)
+[2026-03-09 21:05:57]   Run 1 gespeichert: results/t2_sam_run1.json
+[2026-03-09 21:05:57]   TIMESTAMP_END   t2_sam_run1: 2026-03-09 21:05:57 (epoch: 1773086757)
+[2026-03-09 21:15:58]   Wartezeit abgeschlossen: Pause vor Run 2
+[2026-03-09 21:15:58]   T2 Run 2/3 gestartet
+[2026-03-09 21:15:58]   DB-Reset: vor Run 2/3 (SAM)
+[2026-03-09 21:16:01]   DB-Reset erfolgreich – 0 Dokumente
+[2026-03-09 21:16:01]   T1 Check gestartet: SAM
+[2026-03-09 21:19:02]   T1 SAM abgeschlossen: 
+[2026-03-09 21:19:02]   T2 gestartet → results/t2_sam_run2.json
+[2026-03-09 21:19:02]   TIMESTAMP_START t2_sam_run2: 2026-03-09 21:19:02 (epoch: 1773087542)
+[2026-03-09 21:29:02]   Run 2 gespeichert: results/t2_sam_run2.json
+[2026-03-09 21:29:02]   TIMESTAMP_END   t2_sam_run2: 2026-03-09 21:29:02 (epoch: 1773088142)
+[2026-03-09 21:39:03]   Wartezeit abgeschlossen: Pause vor Run 3
+[2026-03-09 21:39:03]   T2 Run 3/3 gestartet
+[2026-03-09 21:39:03]   DB-Reset: vor Run 3/3 (SAM)
+[2026-03-09 21:39:06]   DB-Reset erfolgreich – 0 Dokumente
+[2026-03-09 21:39:06]   T1 Check gestartet: SAM
+[2026-03-09 21:42:07]   T1 SAM abgeschlossen: 
+[2026-03-09 21:42:07]   T2 gestartet → results/t2_sam_run3.json
+[2026-03-09 21:42:07]   TIMESTAMP_START t2_sam_run3: 2026-03-09 21:42:07 (epoch: 1773088927)
+[2026-03-09 21:52:07]   Run 3 gespeichert: results/t2_sam_run3.json
+[2026-03-09 21:52:07]   TIMESTAMP_END   t2_sam_run3: 2026-03-09 21:52:07 (epoch: 1773089527)
+[2026-03-09 21:52:07] T2 SAM abgeschlossen.
+═══════════════════════════════════════════════════════
+  T3 Ramp – SAM (1× ~12 min)
+═══════════════════════════════════════════════════════
+[2026-03-09 21:52:07] URL: https://ktqmoos1s6.execute-api.eu-central-1.amazonaws.com/Prod
+[2026-03-09 21:52:07]   DB-Reset: vor T3 (SAM)
+[2026-03-09 21:52:10]   DB-Reset erfolgreich – 0 Dokumente
+[2026-03-09 21:52:10]   T3 gestartet → results/t3_sam.json
+[2026-03-09 22:04:11]   T3 SAM gespeichert: results/t3_sam.json
+═══════════════════════════════════════════════════════
+  Pause: SAM → Serverless Framework (10 min)
+═══════════════════════════════════════════════════════
+[2026-03-09 22:14:11]   Wartezeit abgeschlossen: Framework-Pause
+═══════════════════════════════════════════════════════
+  T2 Konstantlast – SLS (3× 10 min)
+═══════════════════════════════════════════════════════
+[2026-03-09 22:14:11] URL: https://e9dfzfg50g.execute-api.eu-central-1.amazonaws.com/prod
+[2026-03-09 22:14:11]   T2 Run 1/3 gestartet
+[2026-03-09 22:14:11]   DB-Reset: vor Run 1/3 (SLS)
+[2026-03-09 22:14:14]   DB-Reset erfolgreich – 0 Dokumente
+[2026-03-09 22:14:14]   T1 Check gestartet: SLS
+[2026-03-09 22:17:15]   T1 SLS abgeschlossen: 
+[2026-03-09 22:17:15]   T2 gestartet → results/t2_sls_run1.json
+[2026-03-09 22:17:15]   TIMESTAMP_START t2_sls_run1: 2026-03-09 22:17:15 (epoch: 1773091035)
+[2026-03-09 22:27:16]   Run 1 gespeichert: results/t2_sls_run1.json
+[2026-03-09 22:27:16]   TIMESTAMP_END   t2_sls_run1: 2026-03-09 22:27:16 (epoch: 1773091636)
+[2026-03-09 22:37:16]   Wartezeit abgeschlossen: Pause vor Run 2
+[2026-03-09 22:37:16]   T2 Run 2/3 gestartet
+[2026-03-09 22:37:16]   DB-Reset: vor Run 2/3 (SLS)
+[2026-03-09 22:37:19]   DB-Reset erfolgreich – 0 Dokumente
+[2026-03-09 22:37:19]   T1 Check gestartet: SLS
+[2026-03-09 22:40:20]   T1 SLS abgeschlossen: 
+[2026-03-09 22:40:20]   T2 gestartet → results/t2_sls_run2.json
+[2026-03-09 22:40:20]   TIMESTAMP_START t2_sls_run2: 2026-03-09 22:40:20 (epoch: 1773092420)
+[2026-03-09 22:50:21]   Run 2 gespeichert: results/t2_sls_run2.json
+[2026-03-09 22:50:21]   TIMESTAMP_END   t2_sls_run2: 2026-03-09 22:50:21 (epoch: 1773093021)
+[2026-03-09 23:00:21]   Wartezeit abgeschlossen: Pause vor Run 3
+[2026-03-09 23:00:21]   T2 Run 3/3 gestartet
+[2026-03-09 23:00:21]   DB-Reset: vor Run 3/3 (SLS)
+[2026-03-09 23:00:24]   DB-Reset erfolgreich – 0 Dokumente
+[2026-03-09 23:00:24]   T1 Check gestartet: SLS
+[2026-03-09 23:03:24]   T1 SLS abgeschlossen: 
+[2026-03-09 23:03:24]   T2 gestartet → results/t2_sls_run3.json
+[2026-03-09 23:03:24]   TIMESTAMP_START t2_sls_run3: 2026-03-09 23:03:24 (epoch: 1773093804)
+[2026-03-09 23:13:25]   Run 3 gespeichert: results/t2_sls_run3.json
+[2026-03-09 23:13:25]   TIMESTAMP_END   t2_sls_run3: 2026-03-09 23:13:25 (epoch: 1773094405)
+[2026-03-09 23:13:25] T2 SLS abgeschlossen.
+═══════════════════════════════════════════════════════
+  T3 Ramp – SLS (1× ~12 min)
+═══════════════════════════════════════════════════════
+[2026-03-09 23:13:25] URL: https://e9dfzfg50g.execute-api.eu-central-1.amazonaws.com/prod
+[2026-03-09 23:13:25]   DB-Reset: vor T3 (SLS)
+[2026-03-09 23:13:28]   DB-Reset erfolgreich – 0 Dokumente
+[2026-03-09 23:13:28]   T3 gestartet → results/t3_sls.json
+[2026-03-09 23:25:28]   T3 SLS gespeichert: results/t3_sls.json
+═══════════════════════════════════════════════════════
+  Pause: Serverless Framework → OpenFaaS (10 min)
+═══════════════════════════════════════════════════════
+[2026-03-09 23:35:28]   Wartezeit abgeschlossen: Framework-Pause
+═══════════════════════════════════════════════════════
+  T2 Konstantlast – FAAS (3× 10 min)
+═══════════════════════════════════════════════════════
+[2026-03-09 23:35:28] URL: http://aeaf98ecd4b5b4f818de564cba531498-1255126595.eu-central-1.elb.amazonaws.com:8080/function/vlp-vehicle-service
+[2026-03-09 23:35:28]   T2 Run 1/3 gestartet
+[2026-03-09 23:35:28]   DB-Reset: vor Run 1/3 (FAAS)
+[2026-03-09 23:35:30]   DB-Reset erfolgreich – 0 Dokumente
+[2026-03-09 23:35:30]   T1 Check gestartet: FAAS
+[2026-03-09 23:38:31]   T1 FAAS abgeschlossen: 
+[2026-03-09 23:38:31]   T2 gestartet → results/t2_faas_run1.json
+[2026-03-09 23:38:31]   TIMESTAMP_START t2_faas_run1: 2026-03-09 23:38:31 (epoch: 1773095911)
+[2026-03-09 23:48:32]   Run 1 gespeichert: results/t2_faas_run1.json
+[2026-03-09 23:48:32]   TIMESTAMP_END   t2_faas_run1: 2026-03-09 23:48:32 (epoch: 1773096512)
+[2026-03-09 23:58:32]   Wartezeit abgeschlossen: Pause vor Run 2
+[2026-03-09 23:58:32]   T2 Run 2/3 gestartet
+[2026-03-09 23:58:32]   DB-Reset: vor Run 2/3 (FAAS)
+[2026-03-09 23:58:34]   DB-Reset erfolgreich – 0 Dokumente
+[2026-03-09 23:58:34]   T1 Check gestartet: FAAS
+[2026-03-10 00:01:35]   T1 FAAS abgeschlossen: 
+[2026-03-10 00:01:35]   T2 gestartet → results/t2_faas_run2.json
+[2026-03-10 00:01:35]   TIMESTAMP_START t2_faas_run2: 2026-03-10 00:01:35 (epoch: 1773097295)
+[2026-03-10 00:11:36]   Run 2 gespeichert: results/t2_faas_run2.json
+[2026-03-10 00:11:36]   TIMESTAMP_END   t2_faas_run2: 2026-03-10 00:11:36 (epoch: 1773097896)
+[2026-03-10 00:21:36]   Wartezeit abgeschlossen: Pause vor Run 3
+[2026-03-10 00:21:36]   T2 Run 3/3 gestartet
+[2026-03-10 00:21:36]   DB-Reset: vor Run 3/3 (FAAS)
+[2026-03-10 00:21:38]   DB-Reset erfolgreich – 0 Dokumente
+[2026-03-10 00:21:38]   T1 Check gestartet: FAAS
+[2026-03-10 00:24:39]   T1 FAAS abgeschlossen: 
+[2026-03-10 00:24:39]   T2 gestartet → results/t2_faas_run3.json
+[2026-03-10 00:24:39]   TIMESTAMP_START t2_faas_run3: 2026-03-10 00:24:39 (epoch: 1773098679)
+[2026-03-10 00:34:40]   Run 3 gespeichert: results/t2_faas_run3.json
+[2026-03-10 00:34:40]   TIMESTAMP_END   t2_faas_run3: 2026-03-10 00:34:40 (epoch: 1773099280)
+[2026-03-10 00:34:40] T2 FAAS abgeschlossen.
+═══════════════════════════════════════════════════════
+  T3 Ramp – FAAS (1× ~12 min)
+═══════════════════════════════════════════════════════
+[2026-03-10 00:34:40] URL: http://aeaf98ecd4b5b4f818de564cba531498-1255126595.eu-central-1.elb.amazonaws.com:8080/function/vlp-vehicle-service
+[2026-03-10 00:34:40]   DB-Reset: vor T3 (FAAS)
+[2026-03-10 00:34:42]   DB-Reset erfolgreich – 0 Dokumente
+[2026-03-10 00:34:42]   T3 gestartet → results/t3_faas.json
+[2026-03-10 00:46:43]   T3 FAAS gespeichert: results/t3_faas.json
+═══════════════════════════════════════════════════════
+  Testreihe abgeschlossen
+═══════════════════════════════════════════════════════
+[2026-03-10 00:46:43] T2/T3 Testreihe vollständig abgeschlossen.
